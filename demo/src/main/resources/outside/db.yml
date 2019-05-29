@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    test1:
+      username: dbuser
+      password: mysql
+    test2:
+      username: dbuser
+      password: mysql
+security:
+  db:
+    isCrypted: false
+    propertyKey:

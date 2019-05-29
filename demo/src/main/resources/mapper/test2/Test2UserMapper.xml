@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rnbbusiness.demo.dao.test2.Test2UserMapper">
+    <resultMap id="Test2UserResultMap" type="com.rnbbusiness.demo.dao.test2.Test2User">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+    </resultMap>
+
+    <select id="selectAll" resultMap="Test2UserResultMap">
+        select
+          `id`, `name`
+        from
+          test2_user
+    </select>
+</mapper>
