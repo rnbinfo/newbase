@@ -2,7 +2,6 @@ package com.rnbbusiness.demo.controller;
 
 import com.business.newbase.toolkit.security.AES256;
 import com.rnbbusiness.demo.api.TestHeadReqeust;
-import com.rnbbusiness.demo.api.TestHeadResponse;
 import com.rnbbusiness.demo.api.TestResponse;
 import com.rnbbusiness.newbase.exception.RnbbusinessRuntimeException;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,7 @@ public class TestController {
     }
 
     @RequestMapping("/getException")
-    public void getException() throws RnbbusinessRuntimeException {
+    public void getException() {
         throw new RnbbusinessRuntimeException("10003", "this is an demo exception");
     }
 

@@ -1,6 +1,6 @@
 package com.rnbbusiness.demo.config;
 
-import com.rnbbusiness.newbase.persistent.config.RnbbusinessDruidDataSource;
+import com.rnbbusiness.newbase.persistence.config.RnbbusinessDruidDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
