@@ -35,7 +35,8 @@
         <module>web</module>
         <module>mail</module>
         <module>rabbitmq</module>
-        <module>i18</module>
+        <module>redis</module>
+        <module>controller</module>
     </modules>
 
     <dependencies>
