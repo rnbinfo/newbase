@@ -35,7 +35,7 @@ public class CustomSecurityConfig extends RnbbusinessSecurityConfig {
         RnbbusinessFilterSecurityMetadataSource metadataSource
                 =
                 new RnbbusinessFilterSecurityMetadataSource(Arrays.asList("/testHead", "/getException",
-                        "/findTest2Users",
+                        "/findTest2Users", "/testAop",
                         "/login", "/css/**", "/fonts/**", "/js/**", "/scss/**", "/img/**"));
         return metadataSource;
     }

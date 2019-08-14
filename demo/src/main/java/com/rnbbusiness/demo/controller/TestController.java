@@ -3,6 +3,7 @@ package com.rnbbusiness.demo.controller;
 import com.business.newbase.toolkit.security.AES256;
 import com.rnbbusiness.demo.api.TestHeadReqeust;
 import com.rnbbusiness.demo.api.TestResponse;
+import com.rnbbusiness.newbase.aspect.annotation.PrintLog;
 import com.rnbbusiness.newbase.exception.RnbbusinessRuntimeException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +31,12 @@ public class TestController {
         tr.setFunction("testHeader");
         tr.setResult("completed");
         return tr;
+    }
+
+    @PrintLog
+    @RequestMapping("testAop")
+    public String testAop() {
+        String value = "Test Aop";
+        return value;
     }
 }

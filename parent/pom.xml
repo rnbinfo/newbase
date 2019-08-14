@@ -37,6 +37,7 @@
         <module>rabbitmq</module>
         <module>redis</module>
         <module>controller</module>
+        <module>aspect</module>
     </modules>
 
     <dependencies>
