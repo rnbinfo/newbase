@@ -1,8 +1,8 @@
-package com.rnbbusiness.newbase.web.handler;
+package com.rnb.newbase.controller.handler;
 
+import com.rnb.newbase.controller.api.HttpResponse;
+import com.rnb.newbase.controller.api.HttpResponseHeader;
 import com.rnbbusiness.newbase.exception.RnbbusinessRuntimeException;
-import com.rnbbusiness.newbase.web.api.HttpResponse;
-import com.rnbbusiness.newbase.web.api.HttpResponseHeader;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

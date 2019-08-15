@@ -59,13 +59,22 @@
             <version>0.0.2-SNAPSHOT</version>
         </dependency>
 
-        <!-- AOP依赖模块 -->
+        <!-- test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>2.1.7.RELEASE</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- provider -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

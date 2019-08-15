@@ -1,10 +1,10 @@
 spring:
   datasource:
     test1:
-      username: dbuser
+      username: root
       password: mysql
     test2:
-      username: dbuser
+      username: root
       password: mysql
 security:
   db:

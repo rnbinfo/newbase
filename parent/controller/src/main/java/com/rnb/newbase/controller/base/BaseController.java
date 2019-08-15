@@ -1,9 +1,8 @@
-package com.rnbbusiness.newbase.web.base;
+package com.rnb.newbase.controller.base;
 
+import com.rnb.newbase.controller.api.*;
 import com.rnbbusiness.newbase.exception.NewbaseExceptionConstants;
 import com.rnbbusiness.newbase.exception.RnbbusinessRuntimeException;
-import com.rnbbusiness.newbase.web.api.*;
-import com.rnbbusiness.newbase.web.common.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,19 +19,15 @@ public abstract class BaseController {
         return response;
     }
 
-    protected void checkInnerHttpRequestHeader(HttpInnerRequest request) {
-        this.checkHttpRequestHeader(request, Constants.RequestSource.INNER.getValue());
-    }
-
-    private void checkHttpRequestHeader(HttpRequest request, String requestSource) {
+    protected void checkHttpRequestHeader(HttpRequest request) {
         if (request != null && request.getHeader() != null) {
-            if (Constants.RequestSource.INNER.getValue().equals(requestSource)) {
+            if (request instanceof HttpInnerRequest) {
                 if (!(request.getHeader() instanceof HttpInnerRequestHeader)) {
-                    throw new RnbbusinessRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_INEER_HEADER);
+                    throw new RnbbusinessRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_INNER_HEADER);
                 }
-            } else if (Constants.RequestSource.OUTER.getValue().equals(requestSource)) {
-                if (!(request.getHeader() instanceof HttpOuterRequestHeader)) {
-                    throw new RnbbusinessRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_OUTER_HEADER);
+            } else if (request instanceof HttpFrontRequest) {
+                if (!(request.getHeader() instanceof HttpInnerRequestHeader)) {
+                    throw new RnbbusinessRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_FRONT_HEADER);
                 }
             }
         } else {

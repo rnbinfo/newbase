@@ -1,4 +1,4 @@
-package com.rnbbusiness.newbase.web.api;
+package com.rnb.newbase.controller.api;
 
 import lombok.Data;
 

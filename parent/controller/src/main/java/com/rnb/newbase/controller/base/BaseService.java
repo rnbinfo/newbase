@@ -1,4 +1,4 @@
-package com.rnbbusiness.newbase.web.base;
+package com.rnb.newbase.controller.base;
 
 import com.rnbbusiness.newbase.persistence.dao.BaseDao;
 import org.slf4j.Logger;

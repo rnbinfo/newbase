@@ -5,6 +5,8 @@ import com.rnbbusiness.demo.api.TestHeadReqeust;
 import com.rnbbusiness.demo.api.TestResponse;
 import com.rnbbusiness.newbase.aspect.annotation.PrintLog;
 import com.rnbbusiness.newbase.exception.RnbbusinessRuntimeException;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,9 +36,10 @@ public class TestController {
     }
 
     @PrintLog
-    @RequestMapping("testAop")
-    public String testAop() {
-        String value = "Test Aop";
+    @PostMapping("testAop")
+    public String testAop(@RequestBody TestAopReq request) {
+        String value = request.getTarget() + " - " + request.getMessage();
+        System.out.println("Controller value : " + value);
         return value;
     }
 }
