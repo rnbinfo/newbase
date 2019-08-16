@@ -1,4 +1,4 @@
-package com.business.newbase.toolkit.http;
+package com.rnb.newbase.toolkit.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

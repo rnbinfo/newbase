@@ -1,4 +1,4 @@
-package com.business.newbase.toolkit.security;
+package com.rnb.newbase.toolkit.security;
 
 import org.apache.commons.codec.binary.Base64;
 

@@ -1,6 +1,6 @@
 package com.rnb.newbase.controller.base;
 
-import com.business.newbase.toolkit.http.HttpClientUtil;
+import com.rnb.newbase.toolkit.http.HttpClientUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

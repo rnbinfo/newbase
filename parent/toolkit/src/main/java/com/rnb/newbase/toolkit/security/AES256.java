@@ -1,4 +1,4 @@
-package com.business.newbase.toolkit.security;
+package com.rnb.newbase.toolkit.security;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
