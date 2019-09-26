@@ -14,8 +14,10 @@ public abstract class BaseController {
         responseHeader.setTranStatus("true");
         HttpResponse response = new HttpResponse();
         response.setHeader(responseHeader);
-        response.setBody(responseBody);
-        logger.debug("Response[{}]", response);
+        if (responseBody != null) {
+            response.setBody(responseBody);
+            logger.debug("Response[{}]", response);
+        }
         return response;
     }
 
@@ -26,7 +28,7 @@ public abstract class BaseController {
                     throw new RnbbusinessRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_INNER_HEADER);
                 }
             } else if (request instanceof HttpFrontRequest) {
-                if (!(request.getHeader() instanceof HttpInnerRequestHeader)) {
+                if (!(request.getHeader() instanceof HttpFrontRequestHeader)) {
                     throw new RnbbusinessRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_FRONT_HEADER);
                 }
             }
