@@ -67,13 +67,4 @@ public class MD5Sign {
         }
         return buf.toString();
     }
-
-    public static void main(String[] args) {
-        System.out.println("111111 MD5  :"
-                + MD5Sign.encodeByMD5("action=json&body=Pay order&mch_id=Laowang&notify_url=http://18.138.181.63/core-server/api/paymentUilioner/callback&out_trade_no=24&redirect_url=http://18.138.181.63/payment/wallet.html?id=nOgeCzzqUqIpP1ChmZdbxw==&spbill_create_ip=127.0.0.1&total_fee=1104&trade_type=WX"));
-        System.out.println("111111 MD5  :"
-                + MD5Sign.encode("MD5", "action=json&body=Pay order&mch_id=Laowang&notify_url=http://18.138.181.63/core-server/api/paymentUilioner/callback&out_trade_no=24&redirect_url=http://18.138.181.63/payment/wallet.html?id=nOgeCzzqUqIpP1ChmZdbxw==&spbill_create_ip=127.0.0.1&total_fee=1104&trade_type=WX"));
-        System.out.println("111111 SHA1 :"
-                + MD5Sign.encode("SHA1", "action=json&body=Pay order&mch_id=Laowang&notify_url=http://18.138.181.63/core-server/api/paymentUilioner/callback&out_trade_no=24&redirect_url=http://18.138.181.63/payment/wallet.html?id=nOgeCzzqUqIpP1ChmZdbxw==&spbill_create_ip=127.0.0.1&total_fee=1104&trade_type=WX"));
-    }
 }
