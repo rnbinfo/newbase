@@ -11,9 +11,20 @@ public abstract class BaseRemoteService {
     protected String serverContext;
 
     protected String doJsonPost(String requestUri, String request) {
+        String url = generateUri(requestUri);
+        return HttpClientUtil.doJsonPost(url, request);
+    }
+
+    protected String doParamGet(String requestUri, String param) {
+        String url = generateUri(requestUri);
+        String urlWithParam = url + "?" + param;
+        return HttpClientUtil.getContentForGet(urlWithParam, 3000);
+    }
+
+    protected String generateUri(String requestUri) {
         String url = new StringBuffer("http://").append(serverHost).append(":").append(serverPort)
                 .append("/").append(serverContext).append(requestUri).toString();
-        return HttpClientUtil.doJsonPost(url, request);
+        return url;
     }
 
 }
