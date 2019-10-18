@@ -4,6 +4,8 @@ import com.rnb.newbase.toolkit.http.HttpClientUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 public abstract class BaseRemoteService {
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     protected String serverHost;
@@ -25,6 +27,10 @@ public abstract class BaseRemoteService {
         String url = new StringBuffer("http://").append(serverHost).append(":").append(serverPort)
                 .append("/").append(serverContext).append(requestUri).toString();
         return url;
+    }
+
+    protected String doFormPost(String requestUri, Map<String, String> formParameters, int timeout) throws Exception{
+        return HttpClientUtil.doFormPost(requestUri, formParameters, timeout);
     }
 
 }
