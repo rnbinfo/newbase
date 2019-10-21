@@ -20,6 +20,7 @@ public abstract class BaseRemoteService {
     protected String doParamGet(String requestUri, String param) {
         String url = generateUri(requestUri);
         String urlWithParam = url + "?" + param;
+        logger.debug("Start to get request[{}]", urlWithParam);
         return HttpClientUtil.getContentForGet(urlWithParam, 3000);
     }
 
