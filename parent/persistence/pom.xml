@@ -19,6 +19,7 @@
             <artifactId>core</artifactId>
             <version>0.0.3-SNAPSHOT</version>
         </dependency>
+        <!-- spring framework -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -29,6 +30,7 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.2.12</version>
         </dependency>
+        <!-- tools -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
