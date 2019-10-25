@@ -12,6 +12,4 @@ public class User {
     private String username;
     private String password;
     private List<String> roleCodes;
-    private String token;
-    private Date tokenExpired;
 }
