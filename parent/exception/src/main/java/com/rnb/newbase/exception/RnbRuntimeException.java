@@ -1,17 +1,17 @@
 package com.rnb.newbase.exception;
 
-public class RnbbusinessRuntimeException extends RuntimeException {
+public class RnbRuntimeException extends RuntimeException {
     private IRnbExceptionInfo exceptionInfo;
 
-    public RnbbusinessRuntimeException() {
+    public RnbRuntimeException() {
         super();
     }
 
-    public RnbbusinessRuntimeException(IRnbExceptionInfo exceptionInfo) {
+    public RnbRuntimeException(IRnbExceptionInfo exceptionInfo) {
         this.exceptionInfo = exceptionInfo;
     }
 
-    public RnbbusinessRuntimeException(String errorCode, String errorMessage) {
+    public RnbRuntimeException(String errorCode, String errorMessage) {
         this.exceptionInfo = exceptionInfo;
     }
 

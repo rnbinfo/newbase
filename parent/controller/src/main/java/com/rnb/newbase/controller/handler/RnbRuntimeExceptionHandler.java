@@ -2,7 +2,7 @@ package com.rnb.newbase.controller.handler;
 
 import com.rnb.newbase.controller.api.HttpResponse;
 import com.rnb.newbase.controller.api.HttpResponseHeader;
-import com.rnb.newbase.exception.RnbbusinessRuntimeException;
+import com.rnb.newbase.exception.RnbRuntimeException;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,13 +12,13 @@ import javax.annotation.Resource;
 import java.util.Locale;
 
 @ControllerAdvice
-public class RnbbusinessRuntimeExceptionHandler {
+public class RnbRuntimeExceptionHandler {
     @Resource
     private MessageSource messageSource;
 
-    @ExceptionHandler(value = RnbbusinessRuntimeException.class)
+    @ExceptionHandler(value = RnbRuntimeException.class)
     @ResponseBody
-    public HttpResponse<String> defaultRestExceptionHandler(RnbbusinessRuntimeException e, Locale locale) {
+    public HttpResponse<String> defaultRestExceptionHandler(RnbRuntimeException e, Locale locale) {
         // 国际化处理error message
         String errorMessage;
         try {

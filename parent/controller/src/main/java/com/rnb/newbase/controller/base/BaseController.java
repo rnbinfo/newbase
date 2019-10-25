@@ -2,7 +2,7 @@ package com.rnb.newbase.controller.base;
 
 import com.rnb.newbase.controller.api.*;
 import com.rnb.newbase.exception.NewbaseExceptionConstants;
-import com.rnb.newbase.exception.RnbbusinessRuntimeException;
+import com.rnb.newbase.exception.RnbRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,15 +25,15 @@ public abstract class BaseController {
         if (request != null && request.getHeader() != null) {
             if (request instanceof HttpInnerRequest) {
                 if (!(request.getHeader() instanceof HttpInnerRequestHeader)) {
-                    throw new RnbbusinessRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_INNER_HEADER);
+                    throw new RnbRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_INNER_HEADER);
                 }
             } else if (request instanceof HttpFrontRequest) {
                 if (!(request.getHeader() instanceof HttpFrontRequestHeader)) {
-                    throw new RnbbusinessRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_FRONT_HEADER);
+                    throw new RnbRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_FRONT_HEADER);
                 }
             }
         } else {
-            throw new RnbbusinessRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NULL);
+            throw new RnbRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NULL);
         }
     }
 }

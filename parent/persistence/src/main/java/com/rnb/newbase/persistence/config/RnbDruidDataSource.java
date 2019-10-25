@@ -4,7 +4,7 @@ import com.alibaba.druid.filter.config.ConfigTools;
 import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Value;
 
-public class RnbbusinessDruidDataSource extends DruidDataSource {
+public class RnbDruidDataSource extends DruidDataSource {
     @Value("${security.db.propertyKey}")
     private String key;
     @Value("${security.db.isCrypted}")
