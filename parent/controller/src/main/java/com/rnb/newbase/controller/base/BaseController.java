@@ -1,8 +1,8 @@
 package com.rnb.newbase.controller.base;
 
 import com.rnb.newbase.controller.api.*;
-import com.rnbbusiness.newbase.exception.NewbaseExceptionConstants;
-import com.rnbbusiness.newbase.exception.RnbbusinessRuntimeException;
+import com.rnb.newbase.exception.NewbaseExceptionConstants;
+import com.rnb.newbase.exception.RnbbusinessRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

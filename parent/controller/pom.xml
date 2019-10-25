@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>com.rnbbusiness.newbase</groupId>
-        <version>0.0.2-SNAPSHOT</version>
+        <groupId>com.rnb.newbase</groupId>
+        <version>0.0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>controller</artifactId>
@@ -15,23 +15,23 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.1.7.RELEASE</version>
+            <version>2.1.9.RELEASE</version>
         </dependency>
         <!-- newbase framework -->
         <dependency>
-            <groupId>com.rnbbusiness.newbase</groupId>
+            <groupId>com.rnb.newbase</groupId>
             <artifactId>exception</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.rnbbusiness.newbase</groupId>
+            <groupId>com.rnb.newbase</groupId>
             <artifactId>persistence</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.rnbbusiness.newbase</groupId>
+            <groupId>com.rnb.newbase</groupId>
             <artifactId>toolkit</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -42,13 +42,6 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.58</version>
-        </dependency>
-        <!-- plugin -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.8</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

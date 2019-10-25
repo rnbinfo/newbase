@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>com.rnbbusiness.newbase</groupId>
-        <version>0.0.2-SNAPSHOT</version>
+        <groupId>com.rnb.newbase</groupId>
+        <version>0.0.3-SNAPSHOT</version>
     </parent>
     <artifactId>security</artifactId>
-    <groupId>com.rnbbusiness.newbase</groupId>
-    <version>0.0.2-SNAPSHOT</version>
+    <groupId>com.rnb.newbase</groupId>
+    <version>0.0.3-SNAPSHOT</version>
     <name>security</name>
     <description>Security for NewBase</description>
 
@@ -18,23 +18,23 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>2.1.7.RELEASE</version>
+            <version>2.1.9.RELEASE</version>
         </dependency>
 
         <dependency>
-            <groupId>com.rnbbusiness.newbase</groupId>
+            <groupId>com.rnb.newbase</groupId>
             <artifactId>toolkit</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.rnbbusiness.newbase</groupId>
+            <groupId>com.rnb.newbase</groupId>
             <artifactId>persistence</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.rnbbusiness.newbase</groupId>
+            <groupId>com.rnb.newbase</groupId>
             <artifactId>web</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

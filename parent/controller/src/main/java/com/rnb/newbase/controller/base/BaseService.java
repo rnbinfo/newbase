@@ -1,6 +1,6 @@
 package com.rnb.newbase.controller.base;
 
-import com.rnbbusiness.newbase.persistence.dao.BaseDao;
+import com.rnb.newbase.persistence.dao.BaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

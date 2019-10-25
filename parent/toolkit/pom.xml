@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>com.rnbbusiness.newbase</groupId>
-        <version>0.0.2-SNAPSHOT</version>
+        <groupId>com.rnb.newbase</groupId>
+        <version>0.0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-	<groupId>com.rnbbusiness.newbase</groupId>
+	<groupId>com.rnb.newbase</groupId>
     <artifactId>toolkit</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
 	<name>toolkit</name>
     <description>Toolkit for NewBase</description>
 
@@ -61,6 +61,13 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
             <version>4.5.10</version>
+        </dependency>
+
+        <!-- plugin -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
         </dependency>
 
         <!-- local test -->
