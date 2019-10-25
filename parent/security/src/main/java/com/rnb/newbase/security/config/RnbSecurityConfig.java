@@ -14,9 +14,9 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 
-public class RnbbusinessSecurityConfig extends WebSecurityConfigurerAdapter {
+public class RnbSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserDetailsService rnbbusinessUserService;
+    private UserDetailsService rnbUserService;
 
     /**
      * @return 封装身份认证提供者
@@ -24,7 +24,7 @@ public class RnbbusinessSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(rnbbusinessUserService);  //自定义的用户和角色数据提供者
+        authenticationProvider.setUserDetailsService(rnbUserService);  //自定义的用户和角色数据提供者
         authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder()); //设置密码加密对象
         return authenticationProvider;
     }
@@ -54,12 +54,12 @@ public class RnbbusinessSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public FilterInvocationSecurityMetadataSource mySecurityMetadataSource() {
-        RnbbusinessFilterSecurityMetadataSource securityMetadataSource = new RnbbusinessFilterSecurityMetadataSource();
+        RnbFilterSecurityMetadataSource securityMetadataSource = new RnbFilterSecurityMetadataSource();
         return securityMetadataSource;
     }
 
     @Bean
     public AccessDecisionManager myAccessDecisionManager() {
-        return new RnbbusinessAccessDecisionManager();
+        return new RnbAccessDecisionManager();
     }
 }

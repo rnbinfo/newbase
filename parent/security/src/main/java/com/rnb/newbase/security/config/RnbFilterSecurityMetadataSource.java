@@ -10,16 +10,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.*;
 
-public class RnbbusinessFilterSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+public class RnbFilterSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     @Autowired
     private ResourceDao resourceDao;
 
     private List<String> allowedRequests;
 
-    public RnbbusinessFilterSecurityMetadataSource() {}
+    public RnbFilterSecurityMetadataSource() {}
 
-    public RnbbusinessFilterSecurityMetadataSource(List<String> allowedRequests) {
+    public RnbFilterSecurityMetadataSource(List<String> allowedRequests) {
         this.allowedRequests = allowedRequests;
     }
 
