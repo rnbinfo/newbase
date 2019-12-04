@@ -14,6 +14,7 @@ public class HttpInnerRequestHeader implements HttpRequestHeader {
     private String method; // 请求方法
     private String version; // 方法版本
     private String nonce; // 安全随机串
+    private String loginToken; // 用户会话令牌
     private String sign; // 签名
 
 }

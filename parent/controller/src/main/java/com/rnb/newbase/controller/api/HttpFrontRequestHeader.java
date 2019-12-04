@@ -20,6 +20,7 @@ public class HttpFrontRequestHeader implements HttpRequestHeader {
     private String appChannel; // 渠道
     @NotBlank
     private String appVersion; // app版本
+    private String loginToken; // 用户会话令牌
     private String nonce; // 安全随机串
     private String sign; // 签名
 }
