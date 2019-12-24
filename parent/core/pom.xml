@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rnb.newbase</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>newbase-parent</artifactId>
 		<version>0.0.3-SNAPSHOT</version>
     </parent>
 	<groupId>com.rnb.newbase</groupId>
     <artifactId>core</artifactId>
     <version>0.0.3-SNAPSHOT</version>
-	<name>core</name>
+	<name>${project.artifactId}</name>
     <description>Core for NewBase</description>
 
     <dependencies>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>2.1.9.RELEASE</version>
+            <version>${spring.framework.version}</version>
         </dependency>
     </dependencies>
 </project>

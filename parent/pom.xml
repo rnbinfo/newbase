@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rnb.newbase</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>newbase-parent</artifactId>
     <version>0.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>parent</name>
+    <name>${project.artifactId}</name>
 
     <distributionManagement>
         <snapshotRepository>
@@ -24,6 +24,7 @@
         <project.build.jdk.version>1.8</project.build.jdk.version>
         <java.version>1.8</java.version>
         <maven.test.skip>true</maven.test.skip>
+        <spring.framework.version>2.1.11.RELEASE</spring.framework.version>
     </properties>
 
     <modules>

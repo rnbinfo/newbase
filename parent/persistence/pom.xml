@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rnb.newbase</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>newbase-parent</artifactId>
 		<version>0.0.3-SNAPSHOT</version>
     </parent>
     <groupId>com.rnb.newbase</groupId>
     <artifactId>persistence</artifactId>
     <version>0.0.3-SNAPSHOT</version>
-    <name>persistence</name>
+    <name>${project.artifactId}</name>
     <description>Persistence for NewBase</description>
 
     <dependencies>

@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.rnb.newbase</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>newbase-parent</artifactId>
 		<version>0.0.3-SNAPSHOT</version>
     </parent>
 	<groupId>com.rnb.newbase</groupId>
     <artifactId>exception</artifactId>
     <version>0.0.3-SNAPSHOT</version>
-	<name>exception</name>
+	<name>${project.artifactId}</name>
     <description>Exception for NewBase</description>
 </project>

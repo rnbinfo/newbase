@@ -3,15 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>parent</artifactId>
         <groupId>com.rnb.newbase</groupId>
+        <artifactId>newbase-parent</artifactId>
         <version>0.0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 	<groupId>com.rnb.newbase</groupId>
     <artifactId>toolkit</artifactId>
     <version>0.0.3-SNAPSHOT</version>
-	<name>toolkit</name>
+	<name>${project.artifactId}</name>
     <description>Toolkit for NewBase</description>
 
     <dependencies>
@@ -68,14 +68,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
-        </dependency>
-
-        <!-- local test -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>
