@@ -4,8 +4,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface BaseMapper<T> {
-    public int insert(T t);
-    public int update(T t);
-    public T queryById(BigInteger id);
-    public List<T> queryListByCondition(T Condition);
+    int insert(T t);
+    int update(T t);
+    T queryById(BigInteger id);
+    List<T> queryListByCondition(T Condition);
 }

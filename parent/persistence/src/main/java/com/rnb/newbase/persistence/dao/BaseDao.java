@@ -23,4 +23,15 @@ public abstract class BaseDao<T> {
     public List<T> queryListByCondition(T condition) {
         return getBaseMapper().queryListByCondition(condition);
     }
+
+    public T queryOneByCondition(T condition) {
+        List<T> objects = getBaseMapper().queryListByCondition(condition);
+        if (objects != null && objects.size() == 1) {
+            return objects.get(0);
+        } else if (objects != null && objects.size() > 1) {
+            throw new RuntimeException("Query result is not only one!");
+        } else {
+            return null;
+        }
+    }
 }
