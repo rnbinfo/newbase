@@ -23,9 +23,10 @@ create table `sys_resource` (
   `resource_code` varchar(200) not null comment '资源代码',
   `resource_name` varchar(40) not null comment '资源名称',
   `resource_group` varchar(32) default null comment '资源组编号',
-  `resource_weight` int not null default 0 comment '资源权重',
+  `resource_weight` int not null default 0 comment '资源权重，越大越靠前',
   `resource_type` char(1) not null comment '资源类型(M:菜单、A:非菜单)',
   `resource_url` varchar(200) default null comment '资源地址',
+  `parent_id` BIGINT UNSIGNED NULL COMMENT '所属上级资源id',
   `create_time` timestamp null comment '创建时间',
   `modify_time` timestamp null comment '修改时间',
   primary key (`id`)
