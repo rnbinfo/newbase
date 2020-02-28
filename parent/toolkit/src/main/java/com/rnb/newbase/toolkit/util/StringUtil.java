@@ -7,4 +7,11 @@ public class StringUtil {
         }
         return false;
     }
+
+    public static Boolean isNotBlank(String str) {
+        if (str == null || str.trim().length() == 0) {
+            return false;
+        }
+        return true;
+    }
 }
