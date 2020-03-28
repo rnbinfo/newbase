@@ -15,7 +15,7 @@ public class HttpFrontRequestHeader implements HttpRequestHeader {
     private String requestNo; // 终端请求流水号(防重)
     private Date timestamp; // 请求终端时间
     @NotBlank
-    private String token; // 防重放令牌
+    private String requestToken; // 防重放令牌
     @NotBlank
     private String appChannel; // 渠道
     @NotBlank

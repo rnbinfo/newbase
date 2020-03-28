@@ -5,10 +5,12 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.beans.factory.annotation.Value;
 
 public class RnbDruidDataSource extends DruidDataSource {
-    @Value("${security.db.propertyKey}")
+    @Value("${security.db.propertyKey:}")
     private String key;
-    @Value("${security.db.isCrypted}")
+    @Value("${security.db.isCrypted:false}")
     private Boolean isCrypted;
+    public static String securityMapperLocation = "classpath:mapper/newbase/security/*.xml";
+
     @Override
     public void setPassword(String cryptedPassword) {
         String password = cryptedPassword;

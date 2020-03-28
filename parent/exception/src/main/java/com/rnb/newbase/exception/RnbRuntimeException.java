@@ -12,7 +12,10 @@ public class RnbRuntimeException extends RuntimeException {
     }
 
     public RnbRuntimeException(String errorCode, String errorMessage) {
-        this.exceptionInfo = exceptionInfo;
+        RnbExceptionInfo rnbExceptionInfo = new RnbExceptionInfo();
+        rnbExceptionInfo.setErrorCode(errorCode);
+        rnbExceptionInfo.setErrorMessage(errorMessage);
+        this.exceptionInfo = rnbExceptionInfo;
     }
 
     public IRnbExceptionInfo getExceptionInfo() {

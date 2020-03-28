@@ -1,24 +1,22 @@
 spring:
   datasource:
-    test1:
+    test:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/test1?characterEncoding=UTF-8&useUnicode=true&useSSL=false
-      mapper: classpath:mapper/test1/*.xml
-    test2:
-      driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/test2?characterEncoding=UTF-8&useUnicode=true&useSSL=false
-      mapper: classpath:mapper/test2/*.xml
-  thymeleaf:
-    suffix: .ftl
-    mode: HTML
-    cache: false
-    prefix: classpath:/templates/
-    encoding: UTF-8
+      url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+      mapper: classpath:mapper/test/*.xml
+      username: root
+      password: Mysql@local
+
 server:
   port: 8090
   servlet:
     context-path: /demo
 logging:
   level:
-    root: INFO
-    com.rnbbusiness: DEBUG
+    root: info
+    com.rnb: debug
+
+security:
+  db:
+    isCrypted: false
+    propertyKey:

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rnb.newbase.security.persistent.mapper.SystemUserMapper">
+
+    <sql id="conditionColumn">
+        <if test="null!=id">
+            and `id` = #{id}
+        </if>
+        <if test="null!=username">
+            and `username` = #{username}
+        </if>
+    </sql>
+
+    <sql id="setColumn">
+        <if test="null!=secret">
+            `secret` = #{secret},
+        </if>
+    </sql>
+
+    <sql id="baseColumn">
+        `id`,`username`,`secret`,`secret_expired`,`secret_locked`,`enabled`,`create_time`,`modify_time`
+    </sql>
+
+    <sql id="tableName">`system_user`</sql>
+
+    <resultMap id="resultMap"  type="com.rnb.newbase.security.persistent.entity.SystemUser">
+        <id column="id" property="id" />
+        <result column="username" property="username"/>
+        <result column="secret" property="secret" />
+        <result column="secret_expired" property="secretExpired" />
+        <result column="secret_locked" property="secretLocked" />
+        <result column="enabled" property="enabled" />
+        <result column="create_time" property="createTime" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.rnb.newbase.security.persistent.entity.SystemUser" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="tableName"/> (
+        `username`
+        ,`secret`
+        ,`create_time`
+        ) values (
+        #{username}
+        ,#{secret}
+        ,now()
+        )
+    </insert>
+
+    <update id="update">
+        update
+        <include refid="tableName"/>
+        <set>
+            <include refid="setColumn"/>
+        </set>
+        where
+        `id` = #{id}
+    </update>
+
+    <select id="queryById" resultMap="resultMap">
+        select
+        <include refid="baseColumn" />
+        from
+        <include refid="tableName"/>
+        where
+        `id` = #{id}
+    </select>
+
+    <select id="queryListByCondition" resultMap="resultMap">
+        select
+        <include refid="baseColumn" />
+        from
+        <include refid="tableName"/>
+        <where>
+            <include refid="conditionColumn"/>
+        </where>
+        order by
+        `id`
+    </select>
+</mapper>
