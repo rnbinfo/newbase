@@ -36,7 +36,7 @@ public class GetUserResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         // 获取用户数据
         HttpServletRequest httpServletRequest = (HttpServletRequest) nativeWebRequest.getNativeRequest();
-        String sessionId = httpServletRequest.getRequestedSessionId();
+        String sessionId = httpServletRequest.getSession().getId();
         String loginToken = stringRedisTemplate.opsForValue().get(LoginConstant.REDIS_SESSION_PREFIX + sessionId);
         if (StringUtil.isNotBlank(loginToken)) {
             String userId = stringRedisTemplate.opsForValue().get(LoginConstant.REDIS_LOGIN_TOKEN_PREFIX + loginToken);

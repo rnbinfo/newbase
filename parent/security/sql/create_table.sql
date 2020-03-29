@@ -7,8 +7,8 @@ create table `system_user`
     `secret_expired` tinyint(1) unsigned            not null default 0 comment '密码是否过期',
     `secret_locked`  tinyint(1) unsigned            not null default 0 comment '密码是否锁定',
     `enabled`        tinyint(1) unsigned            not null default 1 comment '账户是否可用',
-    `create_time`    timestamp                      null comment '创建时间',
-    `modify_time`    timestamp                      null comment '修改时间',
+    `create_time`    timestamp                      NULL     DEFAULT NULL COMMENT '创建时间',
+    `modify_time`    timestamp                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     primary key (`id`),
     unique uniq_username (`username`)
 );
@@ -21,8 +21,8 @@ create table `system_role`
     `id`          bigint unsigned auto_increment not null comment '角色编号',
     `name`        varchar(20)                    not null comment '角色名称',
     `description` varchar(40)                    not null comment '角色描述',
-    `create_time` timestamp                      null comment '创建时间',
-    `modify_time` timestamp                      null comment '修改时间',
+    `create_time` timestamp                      NULL     DEFAULT NULL COMMENT '创建时间',
+    `modify_time` timestamp                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     primary key (`id`)
 );
 alter table `system_role`
@@ -39,8 +39,8 @@ create table `system_resource`
     `url`         varchar(200)                            default null comment '资源地址',
     `parent_id`   BIGINT UNSIGNED                NULL COMMENT '所属上级资源id',
     `has_child`   TINYINT UNSIGNED               NOT NULL DEFAULT 0 COMMENT '是否有子节点',
-    `create_time` timestamp                      null comment '创建时间',
-    `modify_time` timestamp                      null comment '修改时间',
+    `create_time` timestamp                      NULL     DEFAULT NULL COMMENT '创建时间',
+    `modify_time` timestamp                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     primary key (`id`),
     INDEX idx_parent_id (`parent_id`)
 );
@@ -53,8 +53,8 @@ create table `system_user_role`
     `id`          bigint unsigned auto_increment not null comment '系统用户角色关系编号',
     `user_id`     bigint unsigned                not null comment '用户编号',
     `role_id`     bigint unsigned                not null comment '角色代码',
-    `create_time` timestamp                      null comment '创建时间',
-    `modify_time` timestamp                      null comment '修改时间',
+    `create_time` timestamp                      NULL     DEFAULT NULL COMMENT '创建时间',
+    `modify_time` timestamp                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     primary key (`id`),
     UNIQUE uniq_user_role (`user_id`, `role_id`)
 );
@@ -67,8 +67,8 @@ create table `system_role_resource`
     `id`          bigint unsigned auto_increment not null comment '系统角色资源权限关系编号',
     `role_id`     bigint unsigned                not null comment '角色代码',
     `resource_id` bigint unsigned                not null comment '资源编号',
-    `create_time` timestamp                      null comment '创建时间',
-    `modify_time` timestamp                      null comment '修改时间',
+    `create_time` timestamp                      NULL     DEFAULT NULL COMMENT '创建时间',
+    `modify_time` timestamp                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     primary key (`id`),
     UNIQUE uniq_role_auth (`role_id`, `resource_id`)
 );

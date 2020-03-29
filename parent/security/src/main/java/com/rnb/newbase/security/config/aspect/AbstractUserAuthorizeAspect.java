@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.rnb.newbase.controller.api.HttpFrontRequest;
 import com.rnb.newbase.exception.RnbRuntimeException;
 import com.rnb.newbase.security.config.constant.LoginConstant;
+import com.rnb.newbase.security.persistent.entity.SystemResource;
 import com.rnb.newbase.security.persistent.entity.SystemUser;
 import com.rnb.newbase.security.service.SystemUserService;
+import com.rnb.newbase.toolkit.util.ListUtil;
 import com.rnb.newbase.toolkit.util.StringUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Before;
@@ -35,7 +37,7 @@ public abstract class AbstractUserAuthorizeAspect {
         // 接收到请求，记录请求内容
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        String httpSessionId = request.getRequestedSessionId();
+        String httpSessionId = request.getSession().getId();
         String requestUri = request.getRequestURI();
         // 从接口中获取用户loginToken
         if ("POST".equals(request.getMethod())) {
@@ -69,9 +71,18 @@ public abstract class AbstractUserAuthorizeAspect {
                         }
                         SystemUser systemUser = systemUserService.findUserWithAuthorizationById(new BigInteger(userId));
                         // 判断用户操作权限
-                        if (systemUser.getResources().contains(requestUri)) {
-                            // 更新token有效时间
-                            systemUserService.updateRedis(httpSessionId, sessionToken, new BigInteger(userId));
+                        if (ListUtil.isNotEmpty(systemUser.getResources())) {
+                            boolean checkAuthorization = false;
+                            for (SystemResource resource : systemUser.getResources()) {
+                                if (requestUri.equals(resource.getUrl())) {
+                                    // 更新token有效时间
+                                    systemUserService.updateRedis(httpSessionId, sessionToken, new BigInteger(userId));
+                                    checkAuthorization = true;
+                                }
+                            }
+                            if (!checkAuthorization) {
+                                throw new RnbRuntimeException("999403", "user.no.authorization");
+                            }
                         } else {
                             throw new RnbRuntimeException("999403", "user.no.authorization");
                         }
