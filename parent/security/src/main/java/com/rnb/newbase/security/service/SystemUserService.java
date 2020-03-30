@@ -1,5 +1,7 @@
 package com.rnb.newbase.security.service;
 
+import com.github.pagehelper.PageHelper;
+import com.rnb.newbase.exception.NewbaseExceptionConstants;
 import com.rnb.newbase.exception.RnbRuntimeException;
 import com.rnb.newbase.persistence.dao.BaseDao;
 import com.rnb.newbase.security.config.constant.LoginConstant;
@@ -9,15 +11,18 @@ import com.rnb.newbase.security.persistent.entity.SystemRole;
 import com.rnb.newbase.security.persistent.entity.SystemUser;
 import com.rnb.newbase.service.base.BaseService;
 import com.rnb.newbase.toolkit.security.BCryptPasswordEncoder;
+import com.rnb.newbase.toolkit.util.ListUtil;
 import com.rnb.newbase.toolkit.util.RandomUtil;
 import com.rnb.newbase.toolkit.util.StringUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -74,20 +79,32 @@ public class SystemUserService extends BaseService<SystemUser> {
      * @return
      */
     public String signUp(String username, String password, String sessionId) {
+        SystemUser systemUser = createUser(username, password);
+        String loginToken = RandomUtil.generateNoSymbleString(32);
+        updateRedis(sessionId, loginToken, systemUser.getId());
+        return loginToken;
+    }
+
+    /**
+     * 新增用户
+     * @param username
+     * @param password
+     * @return
+     */
+    public SystemUser createUser(String username, String password) {
         SystemUser condition = new SystemUser();
         condition.setUsername(username);
         SystemUser systemUser = systemUserDao.queryOneByCondition(condition);
         if (systemUser != null) {
-            throw new RnbRuntimeException("900004", "user.existed");
+            throw new RnbRuntimeException(NewbaseExceptionConstants.SECURITY_USER_EXISTED);
         }
         SystemUser newSystemUser = new SystemUser();
         newSystemUser.setUsername(username);
         newSystemUser.setSecret(bCryptPasswordEncoder.encode(password));
         systemUserDao.insert(newSystemUser);
         systemUser = systemUserDao.queryOneByCondition(condition);
-        String loginToken = RandomUtil.generateNoSymbleString(32);
-        updateRedis(sessionId, loginToken, systemUser.getId());
-        return loginToken;
+        systemUser.setSecret(null);
+        return systemUser;
     }
 
     /**
@@ -130,6 +147,7 @@ public class SystemUserService extends BaseService<SystemUser> {
             }
         }
         systemUser.setResources(userResources);
+        systemUser.setSecret(null);
         return systemUser;
     }
 
@@ -141,5 +159,61 @@ public class SystemUserService extends BaseService<SystemUser> {
     public SystemUser findUserWithAuthorizationById(BigInteger id) {
         SystemUser systemUser = systemUserDao.queryById(id);
         return findUserWithAuthorization(systemUser);
+    }
+
+    /**
+     * 更新用户密码、状态及用户对应角色
+     * @param updateUser
+     * @param rolesId
+     * @return
+     */
+    public SystemUser updateUser(SystemUser updateUser, List<BigInteger> rolesId) {
+        // 更新用户
+        SystemUser existedUser = systemUserDao.queryById(updateUser.getId());
+        if (existedUser == null) {
+            throw new RnbRuntimeException(NewbaseExceptionConstants.SECURITY_USER_NOT_EXISTED);
+        }
+        if (StringUtil.isNotBlank(updateUser.getSecret())) {
+            updateUser.setSecret(bCryptPasswordEncoder.encode(updateUser.getSecret()));
+        }
+        if (updateUser.getEnabled() != null) {
+            updateUser.setEnabled(updateUser.getEnabled());
+        }
+        systemUserDao.update(existedUser);
+        // 更新用户对应角色
+        updateUserRole(existedUser.getId(), rolesId);
+        return findUserWithAuthorizationById(existedUser.getId());
+    }
+
+    /**
+     * 更新用户角色
+     * @param userId
+     * @param rolesId
+     */
+    private void updateUserRole(BigInteger userId, List<BigInteger> rolesId) {
+        if (ListUtil.isNotEmpty(rolesId)) {
+            //删除用户对应所有角色
+            systemUserDao.deleteUserRole(userId);
+            //重新设置用户对应角色
+            for(BigInteger roleId : rolesId) {
+                // 检查对应的权限是否存在
+                if (systemRoleService.checkRoleExisted(roleId)) {
+                    systemUserDao.insertUserRole(userId, roleId);
+                } else {
+                    logger.error("Update user role failed ! roleId[{}] not existed!", roleId);
+                    throw new RnbRuntimeException(NewbaseExceptionConstants.SECURITY_RESOURCE_NOT_EXISTED);
+                }
+            }
+        }
+    }
+
+    public List<SystemUser> queryUsers(int pageNum, int pageSize, Map<String, Object> condition) {
+        List<SystemUser> systemUsers = systemUserDao.queryUsers(pageNum, pageSize, condition);
+        List<SystemUser> returnUsers = new ArrayList<>();
+        for(SystemUser systemUser : systemUsers) {
+            systemUser.setSecret(null);
+            returnUsers.add(systemUser);
+        }
+        return systemUsers;
     }
 }

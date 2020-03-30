@@ -1,4 +1,4 @@
-package com.rnb.newbase.security.config.aspect;
+package com.rnb.newbase.security.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.rnb.newbase.controller.api.HttpFrontRequest;

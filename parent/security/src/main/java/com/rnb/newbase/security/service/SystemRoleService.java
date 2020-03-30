@@ -129,4 +129,17 @@ public class SystemRoleService extends BaseService<SystemRole> {
         systemRoleDao.deleteUserRole(id);
         systemRoleDao.delete(id);
     }
+
+    /**
+     * 检查对应的roleId是否存在
+     * @param roleId
+     * @return
+     */
+    public Boolean checkRoleExisted(BigInteger roleId) {
+        SystemRole systemRole = systemRoleDao.queryById(roleId);
+        if (systemRole != null) {
+            return true;
+        }
+        return false;
+    }
 }

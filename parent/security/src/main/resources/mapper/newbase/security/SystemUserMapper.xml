@@ -6,10 +6,13 @@
 
     <sql id="conditionColumn">
         <if test="null!=id">
-            and `id` = #{id}
+            AND `id` = #{id}
         </if>
         <if test="null!=username">
-            and `username` = #{username}
+            AND `username` = #{username}
+        </if>
+        <if test="null!=enabled">
+            AND `enabled` = #{enabled}
         </if>
     </sql>
 
@@ -68,14 +71,41 @@
     </select>
 
     <select id="queryListByCondition" resultMap="resultMap">
-        select
-        <include refid="baseColumn" />
-        from
-        <include refid="tableName"/>
+        SELECT <include refid="baseColumn" />
+        FROM <include refid="tableName"/>
         <where>
             <include refid="conditionColumn"/>
         </where>
         order by
         `id`
+    </select>
+
+    <delete id="deleteUserRole">
+        DELETE FROM `system_user_role`
+        WHERE `user_id` = #{userId}
+    </delete>
+
+    <insert id="insertUserRole">
+        INSERT INTO `system_user_role` (
+            `user_id`
+            ,`role_id`
+        ) VALUES (
+            #{userId}
+            ,#{roleId}
+        )
+    </insert>
+
+    <select id="queryUsers" resultMap="resultMap">
+        SELECT <include refid="baseColumn" />
+        FROM <include refid="tableName"/>
+        <where>
+            <include refid="conditionColumn" />
+            <if test="null!=roleId">
+                AND `id` IN (
+                    SELECT `system_user_role`
+                    WHERE `role_id` = #{roleId}
+                )
+            </if>
+        </where>
     </select>
 </mapper>
