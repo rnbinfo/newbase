@@ -1,39 +1,26 @@
 package com.rnb.newbase.controller.base;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.rnb.newbase.controller.api.*;
 import com.rnb.newbase.exception.NewbaseExceptionConstants;
 import com.rnb.newbase.exception.RnbRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 public abstract class BaseController {
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-    protected HttpResponse generateSuccessHttpResponse(Object responseBody) {
-        HttpResponseHeader responseHeader = new HttpResponseHeader();
-        responseHeader.setTranStatus("true");
-        HttpResponse response = new HttpResponse();
-        response.setHeader(responseHeader);
-        if (responseBody != null) {
-            response.setBody(responseBody);
-            logger.debug("Response[{}]", response);
-        }
-        return response;
-    }
-
-    protected void checkHttpRequestHeader(HttpRequest request) {
-        if (request != null && request.getHeader() != null) {
-            if (request instanceof HttpInnerRequest) {
-                if (!(request.getHeader() instanceof HttpInnerRequestHeader)) {
-                    throw new RnbRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_INNER_HEADER);
-                }
-            } else if (request instanceof HttpFrontRequest) {
-                if (!(request.getHeader() instanceof HttpFrontRequestHeader)) {
-                    throw new RnbRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NOT_FRONT_HEADER);
-                }
-            }
-        } else {
-            throw new RnbRuntimeException(NewbaseExceptionConstants.HTTP_REQUEST_NULL);
-        }
+    /**
+     * 将对象转换成map
+     * @param conditionObject
+     * @return
+     */
+    protected Map<String, Object> convertConditionToMap(Object conditionObject) {
+        String conditionString = JSONObject.toJSONString(conditionObject);
+        Map<String, Object> condition = JSONObject.parseObject(conditionString, new TypeReference<Map<String, Object>>(){});
+        return condition;
     }
 }

@@ -7,7 +7,10 @@ public enum NewbaseExceptionConstants implements IRnbExceptionInfo {
 
     SECURITY_ROLE_NOT_ONLY_ONE("910001", "security.role.not.only.one"),
     SECURITY_RESOURCE_NOT_EXISTED("910002", "security.resource.not.existed"),
-    SECURITY_RESOURCE_HAS_CHILD("910003", "security.resource.has.child");
+    SECURITY_RESOURCE_HAS_CHILD("910003", "security.resource.has.child"),
+    SECURITY_USER_EXISTED("910004", "security.user.existed"),
+    SECURITY_USER_NOT_EXISTED("910005", "security.not.user.existed"),
+    SECURITY_ROLE_NOT_EXISTED("910006", "security.role.not.existed");
 
     private String errorCode;
     private String errorMessage;
