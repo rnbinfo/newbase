@@ -103,8 +103,8 @@
         <where>
             <include refid="conditionColumn"/>
         </where>
-        order by
-        `id`
+        ORDER BY
+            `weight` ASC
     </select>
 
     <select id="findRoleResources" resultMap="resultMap">
@@ -113,14 +113,16 @@
         FROM
         <include refid="tableName"/> AS s
         WHERE
-        s.`id` in (
-        SELECT
-        rs.`resource_id`
-        FROM
-        `system_role_resource` AS rs
-        WHERE
-        rs.`role_id` = #{roleId}
-        )
+            s.`id` in (
+                SELECT
+                rs.`resource_id`
+                FROM
+                `system_role_resource` AS rs
+                WHERE
+                rs.`role_id` = #{roleId}
+            )
+        ORDER BY
+            `weight` ASC
     </select>
 
     <delete id="delete">

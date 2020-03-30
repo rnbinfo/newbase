@@ -1,7 +1,7 @@
-package com.rnb.newbase.security.persistent.entity;
+package com.rnb.newbase.security.persistent.entity.constant;
 
 public enum SystemResourceType {
-    FRONT_MENU("FM", "前台菜单"),  BACK_SERVICE("FS", "后台服务");
+    FRONT_MENU("FM", "前台菜单"),  BACK_SERVICE("BS", "后台服务");
 
     private String key;
     private String value;

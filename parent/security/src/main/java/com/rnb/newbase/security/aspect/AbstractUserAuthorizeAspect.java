@@ -48,7 +48,6 @@ public abstract class AbstractUserAuthorizeAspect {
                         continue;
                     }
                     if (argObject instanceof HttpFrontRequest) {
-                        logger.debug("Request for [{}] content [{}]", request.getRequestURI(), JSON.toJSONString(argObject));
                         String loginToken = ((HttpFrontRequest) argObject).getHeader().getLoginToken();
                         if (StringUtil.isBlank(loginToken)) {
                             throw new RnbRuntimeException("999403", "login.token.not.existed");

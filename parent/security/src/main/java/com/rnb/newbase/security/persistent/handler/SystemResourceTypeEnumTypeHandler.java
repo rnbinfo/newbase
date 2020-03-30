@@ -1,6 +1,6 @@
 package com.rnb.newbase.security.persistent.handler;
 
-import com.rnb.newbase.security.persistent.entity.SystemResourceType;
+import com.rnb.newbase.security.persistent.entity.constant.SystemResourceType;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @MappedTypes(SystemResourceType.class)
-@MappedJdbcTypes(JdbcType.VARBINARY)
+@MappedJdbcTypes(JdbcType.VARCHAR)
 public class SystemResourceTypeEnumTypeHandler implements TypeHandler<SystemResourceType> {
     @Override
     public void setParameter(PreparedStatement ps, int i, SystemResourceType parameter, JdbcType jdbcType) throws SQLException {

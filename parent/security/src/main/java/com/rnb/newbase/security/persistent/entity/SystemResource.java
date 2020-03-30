@@ -1,5 +1,6 @@
 package com.rnb.newbase.security.persistent.entity;
 
+import com.rnb.newbase.security.persistent.entity.constant.SystemResourceType;
 import lombok.Data;
 
 import java.math.BigInteger;
