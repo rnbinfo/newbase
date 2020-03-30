@@ -12,6 +12,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class AbstractRequestLogAspect {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -29,24 +31,22 @@ public abstract class AbstractRequestLogAspect {
             if (joinPoint.getArgs().length > 0) {
                 for (Object argObject : joinPoint.getArgs()) {
                     if (argObject instanceof HttpRequest) {
-                        logger.info("Request for [{}] content [{}]", request.getRequestURI(), JSON.toJSONString(argObject));
+                        logger.info("Request for [{}] content [{}]", request.getRequestURI(), passwordMask(JSON.toJSONString(argObject)));
                     }
                 }
             }
         }
     }
 
-    @AfterReturning("webLog()")
-    public void afterReturning(JoinPoint joinPoint) {
-        // 接收到请求，记录请求内容
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        if (joinPoint.getArgs().length > 0) {
-            for (Object argObject : joinPoint.getArgs()) {
-                if (argObject instanceof HttpResponse) {
-                    logger.debug("Response for request[{}] content [{}]", request.getRequestURI(), JSON.toJSONString(argObject));
-                }
-            }
+    private String passwordMask(String requestString) {
+        String pattern = "\"password\":\"(.*?)\"";
+        StringBuffer operatorStr = new StringBuffer(requestString);
+        Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(requestString);
+        if (m.find()) {
+            //替换第一次出现的password
+            operatorStr.replace(m.start(0), m.end(0), "\"password\":\"******\"");
         }
+        return operatorStr.toString();
     }
 }
