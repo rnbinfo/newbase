@@ -12,16 +12,9 @@ public abstract class BaseRemoteService {
     protected String serverPort;
     protected String serverContext;
 
-    protected String doJsonPost(String requestUri, String request) {
+    protected String doJsonPost(String requestUri, String request, int timeout) throws Exception {
         String url = generateUri(requestUri);
-        return HttpClientUtil.doJsonPost(url, request);
-    }
-
-    protected String doParamGet(String requestUri, String param) {
-        String url = generateUri(requestUri);
-        String urlWithParam = url + "?" + param;
-        logger.debug("Start to get request[{}]", urlWithParam);
-        return HttpClientUtil.getContentForGet(urlWithParam, 3000);
+        return HttpClientUtil.doJsonPost(url, request, timeout);
     }
 
     protected String generateUri(String requestUri) {
