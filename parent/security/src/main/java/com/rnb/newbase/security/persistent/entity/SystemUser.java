@@ -14,6 +14,7 @@ public class SystemUser {
     private Boolean secretExpired;
     private Boolean secretLocked;
     private Boolean enabled;
+    private Date lastLoginTime;
     private List<SystemRole> roles;
     private List<SystemResource> resources;
     private Date createTime;

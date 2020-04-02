@@ -8,6 +8,7 @@ import java.util.Map;
 
 public abstract class BaseRemoteService {
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    protected String serverProtocol;
     protected String serverHost;
     protected String serverPort;
     protected String serverContext;
@@ -18,7 +19,7 @@ public abstract class BaseRemoteService {
     }
 
     protected String generateUri(String requestUri) {
-        String url = new StringBuffer("http://").append(serverHost).append(":").append(serverPort)
+        String url = new StringBuffer(serverProtocol).append("://").append(serverHost).append(":").append(serverPort)
                 .append("/").append(serverContext).append(requestUri).toString();
         return url;
     }

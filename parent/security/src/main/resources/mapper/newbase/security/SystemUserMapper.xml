@@ -23,7 +23,7 @@
     </sql>
 
     <sql id="baseColumn">
-        `id`,`username`,`secret`,`secret_expired`,`secret_locked`,`enabled`,`create_time`,`modify_time`
+        `id`,`username`,`secret`,`secret_expired`,`secret_locked`,`enabled`,`last_login_time`,`create_time`,`modify_time`
     </sql>
 
     <sql id="tableName">`system_user`</sql>
@@ -35,6 +35,7 @@
         <result column="secret_expired" property="secretExpired" />
         <result column="secret_locked" property="secretLocked" />
         <result column="enabled" property="enabled" />
+        <result column="last_login_time" property="lastLoginTime" />
         <result column="create_time" property="createTime" />
         <result column="modify_time" property="modifyTime" />
     </resultMap>

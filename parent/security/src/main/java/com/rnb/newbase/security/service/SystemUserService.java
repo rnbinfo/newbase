@@ -21,6 +21,7 @@ import org.springframework.util.Assert;
 import javax.annotation.Resource;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -67,6 +68,8 @@ public class SystemUserService extends BaseService<SystemUser> {
             throw new RnbRuntimeException("900001", "user.not.existed.or.password.error");
         }
         String loginToken = RandomUtil.generateNoSymbleString(32);
+        systemUser.setLastLoginTime(new Date());
+        systemUserDao.update(systemUser);
         updateRedis(sessionId, loginToken, systemUser.getId());
         return loginToken;
     }
