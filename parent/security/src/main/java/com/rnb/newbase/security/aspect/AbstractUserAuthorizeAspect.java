@@ -50,22 +50,27 @@ public abstract class AbstractUserAuthorizeAspect {
                     if (argObject instanceof HttpFrontRequest) {
                         String loginToken = ((HttpFrontRequest) argObject).getHeader().getLoginToken();
                         if (StringUtil.isBlank(loginToken)) {
+                            logger.error("User authorize failed! Login token not existed, request[{}]", ((HttpFrontRequest) argObject));
                             throw new RnbRuntimeException("999403", "login.token.not.existed");
                         }
                         //从redis中查询对应session是否存在并比对token
                         if (StringUtil.isBlank(httpSessionId)) {
+                            logger.error("User authorize failed! Session not existed, request[{}]", ((HttpFrontRequest) argObject));
                             throw new RnbRuntimeException("999403", "session.not.existed");
                         }
                         String sessionToken = stringRedisTemplate.opsForValue().get(LoginConstant.REDIS_SESSION_PREFIX + httpSessionId);
                         if (StringUtil.isBlank(sessionToken)) {
-                            throw new RnbRuntimeException("999403", "session.token.not.found");
+                            logger.error("User authorize failed! Session token not existed, request[{}]", ((HttpFrontRequest) argObject));
+                            throw new RnbRuntimeException("999403", "session.token.not.existed");
                         }
                         if (!sessionToken.equals(loginToken)) {
+                            logger.error("User authorize failed! Login token error, request[{}]", ((HttpFrontRequest) argObject));
                             throw new RnbRuntimeException("999403", "login.token.error");
                         }
                         // 根据token获取用户id
                         String userId = stringRedisTemplate.opsForValue().get(LoginConstant.REDIS_LOGIN_TOKEN_PREFIX + sessionToken);
                         if (StringUtil.isBlank(userId)) {
+                            logger.error("User authorize failed! Login token not existed, request[{}]", ((HttpFrontRequest) argObject));
                             throw new RnbRuntimeException("999403", "login.token.not.existed");
                         }
                         SystemUser systemUser = systemUserService.findUserWithAuthorizationById(new BigInteger(userId));
@@ -80,9 +85,11 @@ public abstract class AbstractUserAuthorizeAspect {
                                 }
                             }
                             if (!checkAuthorization) {
+                                logger.error("User authorize failed! User no authorization, request[{}]", ((HttpFrontRequest) argObject));
                                 throw new RnbRuntimeException("999403", "user.no.authorization");
                             }
                         } else {
+                            logger.error("User authorize failed! User no authorization, request[{}]", ((HttpFrontRequest) argObject));
                             throw new RnbRuntimeException("999403", "user.no.authorization");
                         }
                     }
