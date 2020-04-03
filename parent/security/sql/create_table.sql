@@ -1,15 +1,15 @@
 drop table if exists `system_user`;
 create table `system_user`
 (
-    `id`              bigint unsigned auto_increment not null comment '用户编号',
-    `username`        varchar(100)                   not null comment '用户登录名',
-    `secret`          varchar(100)                   not null comment '用户登录密码',
-    `secret_expired`  tinyint(1) unsigned            not null default 0 comment '密码是否过期',
-    `secret_locked`   tinyint(1) unsigned            not null default 0 comment '密码是否锁定',
-    `enabled`         tinyint(1) unsigned            not null default 1 comment '账户是否可用',
-    `last_login_time` DATETIME                       NOT NULL COMMENT '最近登录时间',
-    `create_time`     timestamp                      NULL     DEFAULT NULL COMMENT '创建时间',
-    `modify_time`     timestamp                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    `id`              BIGINT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT '用户编号',
+    `username`        VARCHAR(100)                   NOT NULL COMMENT '用户登录名',
+    `secret`          VARCHAR(100)                   NOT NULL COMMENT '用户登录密码',
+    `secret_expired`  TINYINT(1) UNSIGNED            NOT NULL DEFAULT 0 COMMENT '密码是否过期',
+    `secret_locked`   TINYINT(1) UNSIGNED            NOT NULL DEFAULT 0 COMMENT '密码是否锁定',
+    `enabled`         TINYINT(1) UNSIGNED            NOT NULL DEFAULT 1 COMMENT '账户是否可用',
+    `last_login_time` DATETIME                       NOT NULL DEFAULT '1900-01-01' COMMENT '最近登录时间',
+    `create_time`     TIMESTAMP                      NULL     DEFAULT NULL COMMENT '创建时间',
+    `modify_time`     TIMESTAMP                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     primary key (`id`),
     unique uniq_username (`username`)
 );
