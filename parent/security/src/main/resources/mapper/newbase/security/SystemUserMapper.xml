@@ -90,9 +90,11 @@
         INSERT INTO `system_user_role` (
             `user_id`
             ,`role_id`
+            ,`create_time`
         ) VALUES (
             #{userId}
             ,#{roleId}
+            ,now()
         )
     </insert>
 

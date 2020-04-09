@@ -193,10 +193,10 @@ public class SystemUserService extends BaseService<SystemUser> {
      * @param userId
      * @param rolesId
      */
-    private void updateUserRole(BigInteger userId, List<BigInteger> rolesId) {
+    public void updateUserRole(BigInteger userId, List<BigInteger> rolesId) {
+        //删除用户对应所有角色
+        systemUserDao.deleteUserRole(userId);
         if (ListUtil.isNotEmpty(rolesId)) {
-            //删除用户对应所有角色
-            systemUserDao.deleteUserRole(userId);
             //重新设置用户对应角色
             for(BigInteger roleId : rolesId) {
                 // 检查对应的权限是否存在
@@ -210,6 +210,13 @@ public class SystemUserService extends BaseService<SystemUser> {
         }
     }
 
+    /**
+     * 分页查询用户列表
+     * @param pageNum
+     * @param pageSize
+     * @param condition
+     * @return
+     */
     public List<SystemUser> queryUsers(int pageNum, int pageSize, Map<String, Object> condition) {
         List<SystemUser> systemUsers = systemUserDao.queryUsers(pageNum, pageSize, condition);
         List<SystemUser> returnUsers = new ArrayList<>();
@@ -218,5 +225,25 @@ public class SystemUserService extends BaseService<SystemUser> {
             returnUsers.add(systemUser);
         }
         return systemUsers;
+    }
+
+    /**
+     * 冻结用户
+     * @param id
+     */
+    public void freezeUser(BigInteger id) {
+        SystemUser systemUser = systemUserDao.queryById(id);
+        systemUser.setEnabled(false);
+        systemUserDao.update(systemUser);
+    }
+
+    /**
+     * 解冻用户
+     * @param id
+     */
+    public void unfreezeUser(BigInteger id) {
+        SystemUser systemUser = systemUserDao.queryById(id);
+        systemUser.setEnabled(true);
+        systemUserDao.update(systemUser);
     }
 }
