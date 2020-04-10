@@ -20,6 +20,18 @@
         <if test="null!=secret">
             `secret` = #{secret},
         </if>
+        <if test="null!=secretExpired">
+            `secret_expired` = #{secretExpired},
+        </if>
+        <if test="null!=secretLocked">
+            `secret_locked` = #{secretLocked},
+        </if>
+        <if test="null!=enabled">
+            `enabled` = #{enabled},
+        </if>
+        <if test="null!=lastLoginTime">
+            `last_login_time` = #{lastLoginTime},
+        </if>
     </sql>
 
     <sql id="baseColumn">
