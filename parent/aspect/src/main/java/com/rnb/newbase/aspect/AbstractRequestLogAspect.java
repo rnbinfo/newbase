@@ -3,6 +3,7 @@ package com.rnb.newbase.aspect;
 import com.alibaba.fastjson.JSON;
 import com.rnb.newbase.controller.api.HttpRequest;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,13 @@ public abstract class AbstractRequestLogAspect {
                 }
             }
         }
+    }
+
+    @AfterReturning(value = "webLog()", returning = "result")
+    public void afterReturing(JoinPoint joinPoint, Object result) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        logger.info("Resoibse for request[{}] content [{}]", request.getRequestURI(), passwordMask(JSON.toJSONString(result)));
     }
 
     private String passwordMask(String requestString) {
