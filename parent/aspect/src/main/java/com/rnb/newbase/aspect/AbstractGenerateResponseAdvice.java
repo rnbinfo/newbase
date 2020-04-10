@@ -35,7 +35,7 @@ public abstract class AbstractGenerateResponseAdvice implements ResponseBodyAdvi
                                   Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest request,
                                   ServerHttpResponse response) {
         if (getExcludeUris() == null || !getExcludeUris().contains(request.getURI().getPath())) {
-            if ((body instanceof Map && ((Map) body).containsKey("status") && ((Map) body).get("status").equals(500))
+            if ((body instanceof Map && ((Map) body).containsKey("status") && !((Map) body).get("status").equals(200))
                     || body instanceof HttpResponse) {
                 return body;
             } else {
