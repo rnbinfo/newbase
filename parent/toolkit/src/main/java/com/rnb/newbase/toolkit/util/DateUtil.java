@@ -2,6 +2,8 @@ package com.rnb.newbase.toolkit.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -57,10 +59,63 @@ public class DateUtil {
     /**
      * 获取当前日期指定时间前的时间
      */
-    public static Date getBeforeTime(int type, int count) {
+    public static Date getBeforeTime(int dateType, int count) {
         Calendar beforeCalendar = Calendar.getInstance();
-        beforeCalendar.add(type, count);
+        beforeCalendar.add(dateType, count);
         Date beforeTime = beforeCalendar.getTime();
         return beforeTime;
+    }
+
+    /**
+     * 获取指定时间的差值
+     * @param startTime
+     * @param endTime
+     * @param dateType
+     * @return
+     */
+    public static Long getTimeDifference(Date startTime, Date endTime, int dateType) {
+        Instant startInstant = startTime.toInstant();
+        Instant endInstant = endTime.toInstant();
+        Long difference = 0l;
+        switch(dateType) {
+            case Calendar.MILLISECOND:
+                difference = Duration.between(startInstant, endInstant).toMillis();
+                break;
+            case Calendar.SECOND:
+                difference = Duration.between(startInstant, endInstant).getSeconds();
+                break;
+            case Calendar.MINUTE:
+                difference = Duration.between(startInstant, endInstant).getSeconds()/60;
+                break;
+            case Calendar.HOUR:
+                difference = Duration.between(startInstant, endInstant).getSeconds()/3600;
+                break;
+        }
+        return difference;
+    }
+
+    /**
+     * 获取指定日期的下一日0点时间
+     * @param date
+     * @return
+     */
+    public static Date getNextDate(Date date) {
+        Date nextTime = getNextTime(date, Calendar.DATE);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+        String roundTime = simpleDateFormat.format(nextTime);
+        return strToDate(roundTime, DateUtil.DATETIME_ISO_FORMAT);
+    }
+
+    /**
+     * 获取指定周期后的下一时间
+     * @param date
+     * @return
+     */
+    public static Date getNextTime(Date date, int dateType) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(dateType, 1);
+        Date nextDate = calendar.getTime();
+        return nextDate;
     }
 }
