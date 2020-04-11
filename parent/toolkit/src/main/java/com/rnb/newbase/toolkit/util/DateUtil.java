@@ -34,7 +34,7 @@ public class DateUtil {
     /**
      * 字符串转时间
      */
-    public static Date StrToDate(String strDate, String strFormat) {
+    public static Date strToDate(String strDate, String strFormat) {
         SimpleDateFormat format = new SimpleDateFormat(strFormat);
         Date date = null;
         try {
@@ -48,7 +48,7 @@ public class DateUtil {
     /**
      * 时间转字符串
      */
-    public static String DateToStr(Date date, String strFormat) {
+    public static String dateToStr(Date date, String strFormat) {
         SimpleDateFormat format = new SimpleDateFormat(strFormat);
         String str = format.format(date);
         return str;
