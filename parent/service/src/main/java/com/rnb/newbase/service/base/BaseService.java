@@ -3,7 +3,7 @@ package com.rnb.newbase.service.base;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.rnb.newbase.persistence.dao.BaseDao;
-import com.rnb.newbase.persistence.entity.AbstractEntity;
+import com.rnb.newbase.entity.AbstractEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

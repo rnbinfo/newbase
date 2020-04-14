@@ -54,7 +54,7 @@
         <!-- newbase -->
         <dependency>
             <groupId>com.rnb.newbase</groupId>
-            <artifactId>toolkit</artifactId>
+            <artifactId>entity</artifactId>
             <version>0.0.3-SNAPSHOT</version>
         </dependency>
     </dependencies>

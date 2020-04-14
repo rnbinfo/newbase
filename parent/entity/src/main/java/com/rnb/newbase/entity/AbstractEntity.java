@@ -1,4 +1,4 @@
-package com.rnb.newbase.persistence.entity;
+package com.rnb.newbase.entity;
 
 import lombok.Data;
 
