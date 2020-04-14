@@ -3,6 +3,7 @@ package com.rnb.newbase.service.base;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.rnb.newbase.persistence.dao.BaseDao;
+import com.rnb.newbase.persistence.entity.AbstractEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +35,18 @@ public abstract class BaseService<T> {
 
     public T queryOneByCondition(T condition) {
         return getBaseDao().queryOneByCondition(condition);
+    }
+
+    public int insertOrUpdate(T t) {
+        int updateCount = 0;
+        if (t instanceof AbstractEntity) {
+            if (((AbstractEntity) t).getId() == null) {
+                updateCount = insert(t);
+            } else {
+                updateCount = update(t);
+            }
+        }
+        return updateCount;
     }
 
     // 将对象转换成map
