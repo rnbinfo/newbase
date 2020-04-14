@@ -6,6 +6,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -101,6 +102,35 @@ public class HttpClientUtil {
             result = EntityUtils.toString(responseEntity, DEFAULT_CHARSET);
         } else {
             throw new RuntimeException("Response status:" + statusCode);
+        }
+        return result;
+    }
+
+    /**
+     * 向指定URL发送GET方法的请求
+     *
+     * @param url 发送请求的URL
+     * @return URL 所代表远程资源的响应结果
+     */
+    public static String doGet(String url) throws IOException {
+        String result = null;
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        // 创建 HttpGet.
+        HttpGet httpGet = new HttpGet(url);
+        // 执行get请求.
+        CloseableHttpResponse response = httpclient.execute(httpGet);
+        try {
+            // 获取响应结果
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode == HttpStatus.SC_OK) {
+                HttpEntity responseEntity = response.getEntity();
+                result = EntityUtils.toString(responseEntity, DEFAULT_CHARSET);
+            } else {
+                throw new RuntimeException("Response status:" + statusCode);
+            }
+        } finally {
+            response.close();
+            httpclient.close();
         }
         return result;
     }

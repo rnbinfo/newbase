@@ -16,6 +16,22 @@ create table `system_user`
 alter table `system_user`
     comment '系统用户';
 
+drop table if exists `system_user_weixin`;
+create table `system_user_weixin`
+(
+    `id`            BIGINT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT 'id',
+    `user_id`       BIGINT UNSIGNED                NOT NULL COMMENT '对应用户编号',
+    `open_id`       VARCHAR(100)                   NOT NULL COMMENT '微信openid',
+    `access_token`  VARCHAR(100)                   NOT NULL COMMENT '微信access_token',
+    `refresh_token` VARCHAR(100)                   NOT NULL COMMENT '微信refresh_token',
+    `create_time`   TIMESTAMP                      NULL     DEFAULT NULL COMMENT '创建时间',
+    `modify_time`   TIMESTAMP                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    primary key (`id`),
+    unique uniq_user (`user_id`)
+);
+alter table `system_user_weixin`
+    comment '系统用户微信信息表';
+
 drop table if exists `system_role`;
 create table `system_role`
 (
