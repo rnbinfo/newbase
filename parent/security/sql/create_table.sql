@@ -3,7 +3,7 @@ create table `system_user`
 (
     `id`              BIGINT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT '用户编号',
     `username`        VARCHAR(100)                   NOT NULL COMMENT '用户登录名',
-    `secret`          VARCHAR(100)                   NOT NULL COMMENT '用户登录密码',
+    `secret`          VARCHAR(100)                            DEFAULT NULL COMMENT '用户登录密码',
     `secret_expired`  TINYINT(1) UNSIGNED            NOT NULL DEFAULT 0 COMMENT '密码是否过期',
     `secret_locked`   TINYINT(1) UNSIGNED            NOT NULL DEFAULT 0 COMMENT '密码是否锁定',
     `enabled`         TINYINT(1) UNSIGNED            NOT NULL DEFAULT 1 COMMENT '账户是否可用',
@@ -21,9 +21,9 @@ create table `system_user_weixin`
 (
     `id`            BIGINT UNSIGNED AUTO_INCREMENT NOT NULL COMMENT 'id',
     `user_id`       BIGINT UNSIGNED                NOT NULL COMMENT '对应用户编号',
-    `open_id`       VARCHAR(100)                   NOT NULL COMMENT '微信openid',
-    `access_token`  VARCHAR(100)                   NOT NULL COMMENT '微信access_token',
-    `refresh_token` VARCHAR(100)                   NOT NULL COMMENT '微信refresh_token',
+    `open_id`       VARCHAR(200)                   NOT NULL COMMENT '微信openid',
+    `access_token`  VARCHAR(200)                   NOT NULL COMMENT '微信access_token',
+    `refresh_token` VARCHAR(200)                   NOT NULL COMMENT '微信refresh_token',
     `create_time`   TIMESTAMP                      NULL     DEFAULT NULL COMMENT '创建时间',
     `modify_time`   TIMESTAMP                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     primary key (`id`),
