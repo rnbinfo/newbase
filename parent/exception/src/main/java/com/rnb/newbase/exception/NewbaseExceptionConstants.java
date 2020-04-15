@@ -5,6 +5,7 @@ public enum NewbaseExceptionConstants implements IRnbExceptionInfo {
     HTTP_REQUEST_NOT_INNER_HEADER("900002", "Http request check header failed: request header is not inner header."),
     HTTP_REQUEST_NOT_FRONT_HEADER("900003", "Http request check header failed: request header is not front header."),
 
+    HTTP_INNER_REQUEST_EXCEPTION("901001", "http.inner.request.exception"),
     HTTP_INNER_REQUEST_NOT_EXISTED("901001", "http.inner.request.not.existed"),
     HTTP_INNER_REQUEST_SOURCE_NOT_ALLOWED("901001", "http.inner.request.source.not.allowed"),
 
