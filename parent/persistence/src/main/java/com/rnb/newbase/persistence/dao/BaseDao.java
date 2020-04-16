@@ -1,5 +1,6 @@
 package com.rnb.newbase.persistence.dao;
 
+import com.github.pagehelper.PageHelper;
 import com.rnb.newbase.persistence.mapper.BaseMapper;
 
 import java.math.BigInteger;
@@ -21,6 +22,11 @@ public abstract class BaseDao<T> {
     }
 
     public List<T> queryListByCondition(T condition) {
+        return getBaseMapper().queryListByCondition(condition);
+    }
+
+    public List<T> queryPagesByCondition(int pageNum, int pageSize,T condition) {
+        PageHelper.startPage(pageNum,pageSize);
         return getBaseMapper().queryListByCondition(condition);
     }
 

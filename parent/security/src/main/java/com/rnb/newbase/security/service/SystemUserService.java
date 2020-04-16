@@ -14,6 +14,7 @@ import com.rnb.newbase.toolkit.security.BCryptPasswordEncoder;
 import com.rnb.newbase.toolkit.util.ListUtil;
 import com.rnb.newbase.toolkit.util.RandomUtil;
 import com.rnb.newbase.toolkit.util.StringUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +43,9 @@ public class SystemUserService extends BaseService<SystemUser> {
     private SystemUserWeixinService systemUserWeixinService;
     @Resource
     private StringRedisTemplate stringRedisTemplate;
+
+    @Value("${app.auth.session.duration}")
+    private String duration;
 
     /**
      * 用户登录
@@ -176,8 +180,21 @@ public class SystemUserService extends BaseService<SystemUser> {
      * @param userId
      */
     public void updateRedis(String sessionId, String loginToken, BigInteger userId) {
-        stringRedisTemplate.opsForValue().set(LoginConstant.REDIS_SESSION_PREFIX + sessionId, loginToken, 60 * 30, TimeUnit.SECONDS);
-        stringRedisTemplate.opsForValue().set(LoginConstant.REDIS_LOGIN_TOKEN_PREFIX + loginToken, userId.toString(), 60*30, TimeUnit.SECONDS);
+        // 获取时间周期
+        if (StringUtil.isBlank(duration)) {
+            duration = "30m";
+        }
+        Long durationPeriod = new Long(duration.substring(0, duration.length() - 1));
+        switch(duration.substring(duration.length() - 1)) {
+            case "d":
+                durationPeriod = durationPeriod * 24;
+            case "h":
+                durationPeriod = durationPeriod * 60;
+            case "m":
+                durationPeriod = durationPeriod * 60;
+        }
+        stringRedisTemplate.opsForValue().set(LoginConstant.REDIS_SESSION_PREFIX + sessionId, loginToken, durationPeriod, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(LoginConstant.REDIS_LOGIN_TOKEN_PREFIX + loginToken, userId.toString(), durationPeriod, TimeUnit.SECONDS);
     }
 
     /**
