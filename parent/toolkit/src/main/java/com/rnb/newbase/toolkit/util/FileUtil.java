@@ -2,10 +2,7 @@ package com.rnb.newbase.toolkit.util;
 
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +22,17 @@ public class FileUtil {
      * 获取指定路径下所有文件名称集合
      *
      * @param path 所需查询的路径
-     * @param type 文件后缀
+     * @param suffix 文件后缀
      * @return
      */
-    public static List<String> getFileList(String path, String type) {
+    public static List<String> getFileList(String path, String suffix) {
         List<String> filelist = new ArrayList<String>();
         File dir = new File(path);
         File[] files = dir.listFiles(); // 该文件目录下文件全部放入数组
         if (files != null) {
             for (int i = 0; i < files.length; i++) {
                 String fileName = files[i].getName();
-                if (!files[i].isDirectory() && fileName.endsWith(type)) { // 判断是文件还是文件夹
+                if (!files[i].isDirectory() && fileName.endsWith(suffix)) { // 判断是文件还是文件夹
                     filelist.add(files[i].getName());
                 } else {
                     continue;
@@ -168,7 +165,28 @@ public class FileUtil {
             }
         }
         return buffer;
+    }
 
+    /**
+     * 按行读取文件
+     * @param filename 含路径文件
+     * @param character 文件字符集
+     * @return
+     */
+    public static List<String> readFileByLine(String filename, String character) {
+        List<String> contents = new ArrayList<>();
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(filename), character));
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                contents.add(line);
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return contents;
     }
 
     public static long getFileSize(String filename) {
