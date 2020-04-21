@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.rnb.newbase.controller.api.HttpFrontRequest;
 import com.rnb.newbase.controller.api.HttpFrontRequestHeader;
+import com.rnb.newbase.controller.api.HttpPaginationRepertory;
 import com.rnb.newbase.controller.api.HttpResponse;
 import com.rnb.newbase.exception.NewbaseExceptionConstants;
 import com.rnb.newbase.exception.RnbRuntimeException;
@@ -88,4 +89,30 @@ public abstract class BaseRemoteService {
             throw new RnbRuntimeException(NewbaseExceptionConstants.HTTP_INNER_REQUEST_EXCEPTION);
         }
     }
+
+    protected <T>HttpPaginationRepertory<T> sendPaginationInnerRequest(
+            String url,
+            Object req,
+            int timeout,
+            Class<T> clazz){
+        try{
+            String jsonString = JSONObject.toJSONString(
+                    new HttpFrontRequest<Object>() {{
+                        this.setBody(req);
+                        this.setHeader(generateHeader(""));
+                    }}
+            );
+            logger.debug("请求参数={}", JSONObject.toJSONString(req));
+            String result = this.doJsonPost(url,jsonString,timeout);
+            HttpResponse<HttpPaginationRepertory<T>> rsp = JSON.parseObject(result,new TypeReference<HttpResponse<HttpPaginationRepertory<T>>>(clazz){});
+            logger.debug("响应参数={}", rsp.toString());
+            checkResponse(rsp);
+            return rsp.getBody();
+        }catch (RnbRuntimeException e) {
+            throw new RnbRuntimeException(e.getErrorCode(), e.getErrorMessage());
+        } catch (Exception e){
+            throw new RnbRuntimeException(NewbaseExceptionConstants.HTTP_INNER_REQUEST_EXCEPTION);
+        }
+    }
+
 }
