@@ -41,7 +41,7 @@ public abstract class AbstractRequestLogAspect {
     public void afterReturing(JoinPoint joinPoint, Object result) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        logger.info("Resoibse for request[{}] content [{}]", request.getRequestURI(), passwordMask(JSON.toJSONString(result)));
+        logger.info("Response for request[{}] content [{}]", request.getRequestURI(), passwordMask(JSON.toJSONString(result)));
     }
 
     private String passwordMask(String requestString) {

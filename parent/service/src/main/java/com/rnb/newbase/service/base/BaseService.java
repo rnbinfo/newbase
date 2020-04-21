@@ -2,8 +2,8 @@ package com.rnb.newbase.service.base;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.rnb.newbase.persistence.dao.BaseDao;
 import com.rnb.newbase.entity.AbstractEntity;
+import com.rnb.newbase.persistence.dao.BaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class BaseService<T> {
-
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     public abstract BaseDao<T> getBaseDao();
@@ -31,6 +30,10 @@ public abstract class BaseService<T> {
 
     public List<T> queryListByCondition(T condition) {
         return getBaseDao().queryListByCondition(condition);
+    }
+
+    public List<T> queryPagesByCondition(int pageNum, int pageSize,T condition) {
+        return getBaseDao().queryPagesByCondition(pageNum, pageSize, condition);
     }
 
     public T queryOneByCondition(T condition) {

@@ -21,6 +21,9 @@ public class DateUtil {
 
     /**
      * 调整指定时间
+     * @param date now date
+     * @param dateType Calendar date type
+     * @param amount adjust amount
      */
     public static Date adjustTime(Date date, int dateType, int amount) {
         Date myDate = null;
@@ -58,10 +61,12 @@ public class DateUtil {
 
     /**
      * 获取当前日期指定时间前的时间
+     * @param dateType Calendar date type
+     * @param amount adjust amount
      */
-    public static Date getBeforeTime(int dateType, int count) {
+    public static Date getBeforeTime(int dateType, int amount) {
         Calendar beforeCalendar = Calendar.getInstance();
-        beforeCalendar.add(dateType, count);
+        beforeCalendar.add(dateType, amount);
         Date beforeTime = beforeCalendar.getTime();
         return beforeTime;
     }

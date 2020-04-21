@@ -26,7 +26,7 @@
     </sql>
 
     <sql id="baseColumn">
-        `id`,`user_id`,`open_id`,`access_toekn`,`refresh_token`,`create_time`,`modify_time`
+        `id`,`user_id`,`open_id`,`access_token`,`refresh_token`,`create_time`,`modify_time`
     </sql>
 
     <sql id="tableName">`system_user_weixin`</sql>
