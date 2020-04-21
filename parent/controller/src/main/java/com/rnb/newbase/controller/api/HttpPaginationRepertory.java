@@ -24,8 +24,9 @@ public class HttpPaginationRepertory<T extends Object> {
         totalPage = pageObject.getPages();
     }
 
-    public HttpPaginationRepertory(HttpPaginationRepertory<Object> result){
+    public HttpPaginationRepertory(List<T> queryPagedResult, HttpPaginationRepertory<? extends Object> result){
         this.totalCount = result.getTotalCount();
+        this.pageItems = queryPagedResult;
         currentIndex = result.getCurrentIndex();
         totalPage = result.getTotalPage();
     }
