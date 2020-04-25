@@ -1,5 +1,6 @@
 package com.rnb.newbase.security.persistent.entity;
 
+import com.rnb.newbase.entity.AbstractEntity;
 import com.rnb.newbase.security.persistent.entity.constant.SystemResourceType;
 import lombok.Data;
 
@@ -8,8 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class SystemResource {
-    private BigInteger id;
+public class SystemResource extends AbstractEntity {
     private String code;
     private String name;
     private Integer weight;
@@ -18,8 +18,6 @@ public class SystemResource {
     private BigInteger parentId;
     private Boolean hasChild;
     private List<SystemResource> childSystemResources;
-    private Date createTime;
-    private Date modifyTime;
 
     @Override
     public boolean equals(Object object) {
