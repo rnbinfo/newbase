@@ -123,4 +123,41 @@ public class DateUtil {
         Date nextDate = calendar.getTime();
         return nextDate;
     }
+
+    /**
+     * 获取指定日期的上一日0点时间
+     * @param date
+     * @return
+     */
+    public static Date getBeforeDate(Date date) {
+        Date nextTime = getLastTime(date, Calendar.DATE);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+        String roundTime = simpleDateFormat.format(nextTime);
+        return strToDate(roundTime, DateUtil.DATETIME_ISO_FORMAT);
+    }
+
+    /**
+     * 获取指定周期后的上一时间
+     * @param date
+     * @return
+     */
+    public static Date getLastTime(Date date, int dateType) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(dateType, -1);
+        Date nextDate = calendar.getTime();
+        return nextDate;
+    }
+
+    /**
+     * 获取指定日期对应星期几
+     * @param date
+     * @return
+     */
+    public static int getDayOfWeek(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        return dayOfWeek;
+    }
 }

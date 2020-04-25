@@ -11,7 +11,7 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseService<T> {
+public abstract class BaseService<T extends AbstractEntity> {
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     public abstract BaseDao<T> getBaseDao();
@@ -32,7 +32,7 @@ public abstract class BaseService<T> {
         return getBaseDao().queryListByCondition(condition);
     }
 
-    public List<T> queryPagesByCondition(int pageNum, int pageSize,T condition) {
+    public List<T> queryPagesByCondition(int pageNum, int pageSize, T condition) {
         return getBaseDao().queryPagesByCondition(pageNum, pageSize, condition);
     }
 
@@ -42,12 +42,10 @@ public abstract class BaseService<T> {
 
     public int insertOrUpdate(T t) {
         int updateCount = 0;
-        if (t instanceof AbstractEntity) {
-            if (((AbstractEntity) t).getId() == null) {
-                updateCount = insert(t);
-            } else {
-                updateCount = update(t);
-            }
+        if (t.getId() == null) {
+            updateCount = insert(t);
+        } else {
+            updateCount = update(t);
         }
         return updateCount;
     }
@@ -55,7 +53,8 @@ public abstract class BaseService<T> {
     // 将对象转换成map
     protected Map<String, Object> convertConditionToMap(Object conditionObject) {
         String conditionString = JSONObject.toJSONString(conditionObject);
-        Map<String, Object> condition = JSONObject.parseObject(conditionString, new TypeReference<Map<String, Object>>(){});
+        Map<String, Object> condition = JSONObject.parseObject(conditionString, new TypeReference<Map<String, Object>>() {
+        });
         return condition;
     }
 }

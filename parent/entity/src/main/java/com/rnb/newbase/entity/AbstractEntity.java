@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 public abstract class AbstractEntity {
-    private BigInteger id;
+    protected BigInteger id;
     private Date createTime;
     private Date modifyTime;
 }
