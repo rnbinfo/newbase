@@ -100,6 +100,17 @@ public class DateUtil {
     }
 
     /**
+     * 获取当天日期，不含时间
+     * @param date
+     * @return
+     */
+    public static Date getDateWithoutTime(Date date) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+        String roundTime = simpleDateFormat.format(date);
+        return strToDate(roundTime, DateUtil.DATETIME_ISO_FORMAT);
+    }
+
+    /**
      * 获取指定日期的下一日0点时间
      * @param date
      * @return

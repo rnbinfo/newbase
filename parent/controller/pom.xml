@@ -5,7 +5,7 @@
     <parent>
         <artifactId>newbase-parent</artifactId>
         <groupId>com.rnb.newbase</groupId>
-        <version>0.0.3-SNAPSHOT</version>
+        <version>0.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>controller</artifactId>
@@ -21,17 +21,17 @@
         <dependency>
             <groupId>com.rnb.newbase</groupId>
             <artifactId>exception</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.rnb.newbase</groupId>
             <artifactId>service</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.rnb.newbase</groupId>
             <artifactId>toolkit</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.4-SNAPSHOT</version>
         </dependency>
         <!-- tools -->
         <dependency>

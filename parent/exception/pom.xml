@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.rnb.newbase</groupId>
 		<artifactId>newbase-parent</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
+		<version>0.0.4-SNAPSHOT</version>
     </parent>
 	<groupId>com.rnb.newbase</groupId>
     <artifactId>exception</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
 	<name>${project.artifactId}</name>
     <description>Exception for NewBase</description>
 </project>
