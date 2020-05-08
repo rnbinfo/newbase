@@ -5,7 +5,7 @@
     <parent>
         <artifactId>newbase-parent</artifactId>
         <groupId>com.rnb.newbase</groupId>
-        <version>0.0.3-SNAPSHOT</version>
+        <version>0.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,12 +15,12 @@
         <dependency>
             <groupId>com.rnb.newbase</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.rnb.newbase</groupId>
             <artifactId>api</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
+            <version>0.0.4-SNAPSHOT</version>
         </dependency>
         <!-- swagger ui -->
         <dependency>
