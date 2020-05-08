@@ -41,6 +41,8 @@
         <module>controller</module>
         <module>aspect</module>
         <module>service</module>
+        <module>api</module>
+        <module>swagger</module>
     </modules>
 
     <dependencies>
