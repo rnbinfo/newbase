@@ -34,13 +34,16 @@ public abstract class AbstractGenerateResponseAdvice implements ResponseBodyAdvi
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType,
                                   Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest request,
                                   ServerHttpResponse response) {
-        if (getExcludeUris() == null && getExcludeUris().contains(request.getURI().getPath())) {
-            return body;
-        }
         if (getExcludeUris() == null) {
             for (String excludeUri : getExcludeUris()) {
-                if (request.getURI().getPath().indexOf(excludeUri) >= 0) {
-                    return body;
+                if (excludeUri.endsWith("\\")) {
+                    if (request.getURI().getPath().indexOf(excludeUri) >= 0) {
+                        return body;
+                    }
+                } else {
+                    if (request.getURI().getPath().equals(excludeUri)) {
+                        return body;
+                    }
                 }
             }
         }
