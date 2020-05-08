@@ -34,23 +34,29 @@ public abstract class AbstractGenerateResponseAdvice implements ResponseBodyAdvi
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType,
                                   Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest request,
                                   ServerHttpResponse response) {
-        if (getExcludeUris() == null || !getExcludeUris().contains(request.getURI().getPath())) {
-            if ((body instanceof Map && ((Map) body).containsKey("status") && !((Map) body).get("status").equals(200))
-                    || body instanceof HttpResponse) {
-                return body;
-            } else {
-                HttpResponseHeader responseHeader = new HttpResponseHeader();
-                responseHeader.setTranStatus("true");
-                HttpResponse responseWithHeader = new HttpResponse();
-                responseWithHeader.setHeader(responseHeader);
-                if (body != null) {
-                    responseWithHeader.setBody(body);
-                }
-                logger.debug("Response body [{}]", responseWithHeader);
-                return responseWithHeader;
-            }
-        } else {
+        if (getExcludeUris() == null && getExcludeUris().contains(request.getURI().getPath())) {
             return body;
+        }
+        if (getExcludeUris() == null) {
+            for (String excludeUri : getExcludeUris()) {
+                if (request.getURI().getPath().indexOf(excludeUri) >= 0) {
+                    return body;
+                }
+            }
+        }
+        if ((body instanceof Map && ((Map) body).containsKey("status") && !((Map) body).get("status").equals(200))
+                || body instanceof HttpResponse) {
+            return body;
+        } else {
+            HttpResponseHeader responseHeader = new HttpResponseHeader();
+            responseHeader.setTranStatus("true");
+            HttpResponse responseWithHeader = new HttpResponse();
+            responseWithHeader.setHeader(responseHeader);
+            if (body != null) {
+                responseWithHeader.setBody(body);
+            }
+            logger.debug("Response body [{}]", responseWithHeader);
+            return responseWithHeader;
         }
     }
 }
