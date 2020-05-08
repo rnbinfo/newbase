@@ -34,7 +34,7 @@ public abstract class AbstractGenerateResponseAdvice implements ResponseBodyAdvi
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType,
                                   Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest request,
                                   ServerHttpResponse response) {
-        if (getExcludeUris() == null) {
+        if (getExcludeUris() != null) {
             for (String excludeUri : getExcludeUris()) {
                 if (excludeUri.endsWith("\\")) {
                     if (request.getURI().getPath().indexOf(excludeUri) >= 0) {
