@@ -14,9 +14,15 @@
         <!-- newbase framework -->
         <dependency>
             <groupId>com.rnb.newbase</groupId>
+            <artifactId>core</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rnb.newbase</groupId>
             <artifactId>api</artifactId>
             <version>0.0.3-SNAPSHOT</version>
         </dependency>
+        <!-- swagger ui -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
