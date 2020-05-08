@@ -36,7 +36,7 @@ public abstract class AbstractGenerateResponseAdvice implements ResponseBodyAdvi
                                   ServerHttpResponse response) {
         if (getExcludeUris() != null) {
             for (String excludeUri : getExcludeUris()) {
-                if (excludeUri.endsWith("\\")) {
+                if (excludeUri.endsWith("/")) {
                     if (request.getURI().getPath().indexOf(excludeUri) >= 0) {
                         return body;
                     }
