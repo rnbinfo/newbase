@@ -322,4 +322,14 @@ public class SystemUserService extends BaseService<SystemUser> {
         systemUser.setEnabled(true);
         systemUserDao.update(systemUser);
     }
+
+    /**
+     * 重置用户密码
+     * @param systemUser
+     * @param password
+     */
+    public void resetPassword(SystemUser systemUser, String password) {
+        systemUser.setSecret(bCryptPasswordEncoder.encode(password));
+        update(systemUser);
+    }
 }
