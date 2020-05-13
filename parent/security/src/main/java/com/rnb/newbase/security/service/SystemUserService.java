@@ -329,7 +329,24 @@ public class SystemUserService extends BaseService<SystemUser> {
      * @param password
      */
     public void resetPassword(SystemUser systemUser, String password) {
+        systemUser = systemUserDao.queryById(systemUser.getId());
         systemUser.setSecret(bCryptPasswordEncoder.encode(password));
+        update(systemUser);
+    }
+
+    /**
+     * 修改用户密码
+     * @param systemUser
+     * @param originPassword
+     * @param newPassword
+     */
+    public void updatePassword(SystemUser systemUser, String originPassword, String newPassword) {
+        systemUser = systemUserDao.queryById(systemUser.getId());
+        if (!bCryptPasswordEncoder.matches(originPassword, systemUser.getSecret())) {
+            logger.error("Update user password failed! Origin password not match");
+            throw new RnbRuntimeException(NewbaseExceptionConstants.SECURITY_PASSWORD_NOT_MATCH);
+        }
+        systemUser.setSecret(bCryptPasswordEncoder.encode(newPassword));
         update(systemUser);
     }
 }
