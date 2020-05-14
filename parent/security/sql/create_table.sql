@@ -42,8 +42,7 @@ create table `system_role`
     `modify_time` timestamp                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     primary key (`id`)
 );
-alter table `system_role`
-    comment '系统角色';
+alter table `system_role` comment '系统角色';
 
 drop table if exists `system_resource`;
 create table `system_resource`
@@ -59,10 +58,10 @@ create table `system_resource`
     `create_time` timestamp                      NULL     DEFAULT NULL COMMENT '创建时间',
     `modify_time` timestamp                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     primary key (`id`),
+    UNIQUE `uniq_code` (`code`),
     INDEX idx_parent_id (`parent_id`)
 );
-alter table `system_resource`
-    comment '系统资源表';
+alter table `system_resource` comment '系统资源表';
 
 drop table if exists `system_user_role`;
 create table `system_user_role`
