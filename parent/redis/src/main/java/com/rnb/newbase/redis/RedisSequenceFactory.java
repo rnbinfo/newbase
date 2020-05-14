@@ -5,6 +5,7 @@ import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -46,9 +47,9 @@ public class RedisSequenceFactory {
      * @Title: generate
      * @Description: Atomically increments by one the current value.
      */
-    public long generate(String key) {
+    public BigInteger generate(String key) {
         RedisAtomicLong counter = new RedisAtomicLong(key, redisTemplate.getConnectionFactory());
-        return counter.incrementAndGet();
+        return BigInteger.valueOf(counter.incrementAndGet());
     }
 
     /**
@@ -57,10 +58,10 @@ public class RedisSequenceFactory {
      * @Title: generate
      * @Description: Atomically increments by one the current value.
      */
-    public long generate(String key, Date expireTime) {
+    public BigInteger generate(String key, Date expireTime) {
         RedisAtomicLong counter = new RedisAtomicLong(key, redisTemplate.getConnectionFactory());
         counter.expireAt(expireTime);
-        return counter.incrementAndGet();
+        return BigInteger.valueOf(counter.incrementAndGet());
     }
 
     /**
@@ -70,9 +71,9 @@ public class RedisSequenceFactory {
      * @Title: generate
      * @Description: Atomically adds the given value to the current value.
      */
-    public long generate(String key, int increment) {
+    public BigInteger generate(String key, int increment) {
         RedisAtomicLong counter = new RedisAtomicLong(key, redisTemplate.getConnectionFactory());
-        return counter.addAndGet(increment);
+        return BigInteger.valueOf(counter.addAndGet(increment));
     }
 
     /**
@@ -83,10 +84,10 @@ public class RedisSequenceFactory {
      * @Title: generate
      * @Description: Atomically adds the given value to the current value.
      */
-    public long generate(String key, int increment, Date expireTime) {
+    public BigInteger generate(String key, int increment, Date expireTime) {
         RedisAtomicLong counter = new RedisAtomicLong(key, redisTemplate.getConnectionFactory());
         counter.expireAt(expireTime);
-        return counter.addAndGet(increment);
+        return BigInteger.valueOf(counter.addAndGet(increment));
     }
 
 }
