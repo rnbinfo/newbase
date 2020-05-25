@@ -51,6 +51,17 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.48</version>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator</artifactId>
+            <version>1.4.0</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-maven-plugin</artifactId>
+            <version>1.4.0</version>
+        </dependency>
         <!-- newbase -->
         <dependency>
             <groupId>com.rnb.newbase</groupId>
