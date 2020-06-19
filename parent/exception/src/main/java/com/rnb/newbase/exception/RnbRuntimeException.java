@@ -2,9 +2,15 @@ package com.rnb.newbase.exception;
 
 public class RnbRuntimeException extends RuntimeException {
     private IRnbExceptionInfo exceptionInfo;
+    private Object[] parameters;
 
     public RnbRuntimeException() {
         super();
+    }
+
+    public RnbRuntimeException(IRnbExceptionInfo exceptionInfo, Object[] parameters) {
+        this.exceptionInfo = exceptionInfo;
+        this.parameters = parameters;
     }
 
     public RnbRuntimeException(IRnbExceptionInfo exceptionInfo) {
@@ -32,5 +38,9 @@ public class RnbRuntimeException extends RuntimeException {
 
     public String getErrorMessage() {
         return exceptionInfo.getErrorMessage();
+    }
+
+    public Object[] getParameters() {
+        return parameters;
     }
 }

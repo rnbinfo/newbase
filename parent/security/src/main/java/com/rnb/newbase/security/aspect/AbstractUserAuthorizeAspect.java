@@ -86,11 +86,11 @@ public abstract class AbstractUserAuthorizeAspect {
                             }
                             if (!checkAuthorization) {
                                 logger.error("User authorize failed! User no authorization, url[{}], request[{}]", requestUri, ((HttpFrontRequest) argObject));
-                                throw new RnbRuntimeException("999403", "user.no.authorization");
+                                throw new RnbRuntimeException("999401", "user.no.authorization");
                             }
                         } else {
                             logger.error("User authorize failed! User no authorization, url[{}], request[{}]", requestUri, ((HttpFrontRequest) argObject));
-                            throw new RnbRuntimeException("999403", "user.no.authorization");
+                            throw new RnbRuntimeException("999401", "user.no.authorization");
                         }
                     }
                 }

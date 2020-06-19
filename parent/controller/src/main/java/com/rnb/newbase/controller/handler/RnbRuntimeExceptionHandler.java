@@ -22,7 +22,7 @@ public class RnbRuntimeExceptionHandler {
         // 国际化处理error message
         String errorMessage;
         try {
-            errorMessage = messageSource.getMessage(e.getErrorMessage(), null, locale);
+            errorMessage = messageSource.getMessage(e.getErrorMessage(), e.getParameters(), locale);
         } catch (Exception i18nException) {
             i18nException.printStackTrace();
             errorMessage = e.getErrorMessage();
