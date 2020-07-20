@@ -81,6 +81,35 @@ public class SystemUserService extends BaseService<SystemUser> {
     }
 
     /**
+     * 不检查密码直接登录，适用手机验证登录等
+     * @param username
+     * @param sessionId
+     * @return
+     */
+    public String loginWithoutCheck(String username, String sessionId) {
+        SystemUser condition = new SystemUser();
+        condition.setUsername(username);
+        SystemUser systemUser = systemUserDao.queryOneByCondition(condition);
+        if (systemUser == null) {
+            throw new RnbRuntimeException("900001", "user.not.existed.or.password.error");
+        }
+        if (!systemUser.getEnabled()) {
+            throw new RnbRuntimeException("900002", "user.enabled");
+        }
+        if (systemUser.getSecretExpired()) {
+            throw new RnbRuntimeException("900003", "user.password.expired");
+        }
+        if (systemUser.getSecretLocked()) {
+            throw new RnbRuntimeException("900004", "user.password.locked");
+        }
+        String loginToken = RandomUtil.generateNoSymbleString(32);
+        systemUser.setLastLoginTime(new Date());
+        systemUserDao.update(systemUser);
+        updateRedis(sessionId, loginToken, systemUser.getId());
+        return loginToken;
+    }
+
+    /**
      * 用户微信授权登录
      * @param username
      * @param accessToken
