@@ -23,6 +23,7 @@ import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.StringUtility;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Types;
 import java.util.*;
 
@@ -46,8 +47,8 @@ public class CustomJavaTypeResolver implements JavaTypeResolver {
 
         typeMap.put(Types.ARRAY, new JdbcTypeInformation("ARRAY", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
-        typeMap.put(Types.BIGINT, new JdbcTypeInformation("BIGDECIMAL", //$NON-NLS-1$
-                new FullyQualifiedJavaType(BigDecimal.class.getName())));
+        typeMap.put(Types.BIGINT, new JdbcTypeInformation("BIGINT", //$NON-NLS-1$
+                new FullyQualifiedJavaType(BigInteger.class.getName())));
         typeMap.put(Types.BINARY, new JdbcTypeInformation("BINARY", //$NON-NLS-1$
                 new FullyQualifiedJavaType("byte[]"))); //$NON-NLS-1$
         typeMap.put(Types.BIT, new JdbcTypeInformation("BIT", //$NON-NLS-1$

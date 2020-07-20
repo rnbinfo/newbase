@@ -94,7 +94,7 @@ public class InsertSqlElementGenerator extends AbstractXmlElementGenerator {
                         .getParameterClause(introspectedColumn));
             }
             insertClause.append("`");
-            if (i + 1 < columns.size()) {
+            if (i + 1 < columns.size() && !MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn).equals("create_time")) {
                 insertClause.append(", "); //$NON-NLS-1$
                 valuesClause.append(", "); //$NON-NLS-1$
             }

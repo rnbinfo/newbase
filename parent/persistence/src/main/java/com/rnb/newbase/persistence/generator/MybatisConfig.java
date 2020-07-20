@@ -56,6 +56,7 @@ public class MybatisConfig {
         JDBCConnectionConfiguration jdbcConnectionConfiguration = new JDBCConnectionConfiguration();
         jdbcConnectionConfiguration.setDriverClass(DRIVER_CLASS);
         jdbcConnectionConfiguration.setConnectionURL(CONNECTION_URL);
+        jdbcConnectionConfiguration.addProperty("nullCatalogMeansCurrent", "true");
         jdbcConnectionConfiguration.setPassword("Mysql@local");
         jdbcConnectionConfiguration.setUserId("root");
         context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
