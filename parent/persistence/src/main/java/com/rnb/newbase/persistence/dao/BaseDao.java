@@ -1,20 +1,39 @@
 package com.rnb.newbase.persistence.dao;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.rnb.newbase.persistence.mapper.BaseMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public abstract class BaseDao<T> {
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public abstract BaseMapper<T> getBaseMapper();
 
     public int insert(T t) {
-        return getBaseMapper().insert(t);
+        int insertResult = 0;
+        try {
+            insertResult = getBaseMapper().insert(t);
+        } catch (Exception e) {
+            logger.error("Newbase Persistence Insert Failed! Object[{}]=>[{}]", t.getClass().getName(), JSON.toJSON(t));
+            throw e;
+        }
+        return insertResult;
     }
 
     public int update(T t) {
-        return getBaseMapper().update(t);
+        int updateResult = 0;
+        try {
+            updateResult = getBaseMapper().update(t);
+        } catch (Exception e) {
+            logger.error("Newbase Persistence Update Failed! Object[{}]=>[{}]", t.getClass().getName(), JSON.toJSON(t));
+            throw e;
+        }
+        return updateResult;
     }
 
     public T queryById(BigInteger id) {
