@@ -2,7 +2,6 @@ package com.rnb.newbase.toolkit.http;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -14,18 +13,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +65,8 @@ public class HttpClientUtil {
             cm.setMaxTotal(MAX_CONN_TOTAL);
             client = HttpClients.custom().setConnectionManager(cm).build();
             HttpPost httppost = new HttpPost(url);
-            HttpEntity requestEntity = new StringEntity(jsonData, Charset.forName(DEFAULT_CHARSET));
+            StringEntity requestEntity = new StringEntity(jsonData, Charset.forName(DEFAULT_CHARSET));
+            requestEntity.setContentType("application/json");
             httppost.setEntity(requestEntity);
             result = sendPost(client, httppost, timeout);
         } finally {
