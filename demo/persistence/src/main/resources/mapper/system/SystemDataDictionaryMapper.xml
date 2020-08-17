@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rnb.energy.persistence.mapper.system.SystemDataDictionaryMapper">
+  
+  <sql id="conditionColumn">
+    <if test="null != id">
+      and `id` = #{id}
+    </if>
+    <if test="null != type">
+       and `type` = #{type,typeHandler=com.rnb.energy.persistence.handler.DataDictionaryTypeEnumTypeHandler}
+    </if>
+    <if test="null != description">
+       and `description` = #{description,jdbcType=VARCHAR}
+    </if>
+    <if test="null != key">
+       and `key` = #{key,jdbcType=CHAR}
+    </if>
+    <if test="null != value">
+       and `value` = #{value,jdbcType=VARCHAR}
+    </if>
+    <if test="null != system">
+       and `system` = #{system,jdbcType=TINYINT}
+    </if>
+    <if test="null != status">
+       and `status` = #{status,typeHandler=com.rnb.energy.persistence.handler.CommonStatusEnumTypeHandler}
+    </if>
+  </sql>
+  
+  <sql id="setColumn">
+    <if test="null != type">
+      `type` = #{type,typeHandler=com.rnb.energy.persistence.handler.DataDictionaryTypeEnumTypeHandler},
+    </if>
+    <if test="null != description">
+      `description` = #{description,jdbcType=VARCHAR},
+    </if>
+    <if test="null != key">
+      `key` = #{key,jdbcType=CHAR},
+    </if>
+    <if test="null != value">
+      `value` = #{value,jdbcType=VARCHAR},
+    </if>
+    <if test="null != system">
+      `system` = #{system,jdbcType=TINYINT},
+    </if>
+    <if test="null != status">
+      `status` = #{status,typeHandler=com.rnb.energy.persistence.handler.CommonStatusEnumTypeHandler},
+    </if>
+  </sql>
+  
+  <sql id="baseColumn">
+    `id`, 
+    `type`, 
+    `description`, 
+    `key`, 
+    `value`, 
+    `system`, 
+    `status`, 
+    `create_time`, 
+    `modify_time`
+  </sql>
+  
+  <resultMap id="resultMap" type="com.rnb.energy.entity.po.system.SystemDataDictionary">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" property="type" typeHandler="com.rnb.energy.persistence.handler.DataDictionaryTypeEnumTypeHandler" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="key" jdbcType="CHAR" property="key" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="system" jdbcType="TINYINT" property="system" />
+    <result column="status" property="status" typeHandler="com.rnb.energy.persistence.handler.CommonStatusEnumTypeHandler" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.rnb.energy.entity.po.system.SystemDataDictionary" useGeneratedKeys="true">
+    insert into system_data_dictionary (
+      `type`, 
+      `description`, 
+      `key`, 
+      `value`, 
+      `system`, 
+      `status`, 
+      `create_time`
+      )
+    values (
+        #{type,typeHandler=com.rnb.energy.persistence.handler.DataDictionaryTypeEnumTypeHandler},
+      #{description,jdbcType=VARCHAR}, 
+      #{key,jdbcType=CHAR}, 
+      #{value,jdbcType=VARCHAR}, 
+      #{system,jdbcType=TINYINT}, 
+      #{status,typeHandler=com.rnb.energy.persistence.handler.CommonStatusEnumTypeHandler},
+      now()
+      )
+  </insert>
+  
+  <update id="update" parameterType="com.rnb.energy.entity.po.system.SystemDataDictionary">
+    update system_data_dictionary
+    <set>
+      <include refid="setColumn" />
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryById" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from system_data_dictionary
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryListByCondition" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from system_data_dictionary
+    <where>
+      <include refid="conditionColumn" />
+    </where>
+    ORDER BY
+        `id` ASC
+  </select>
+</mapper>

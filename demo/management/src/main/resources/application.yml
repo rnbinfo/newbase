@@ -1,0 +1,12 @@
+server:
+  port: 9702
+  servlet:
+    context-path: /demo-management
+  tomcat:
+    remote_ip_header: x-forwarded-for
+
+app:
+  auth:
+    session:
+      duration: 1h
+    mode: allow

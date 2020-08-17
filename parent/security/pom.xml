@@ -6,11 +6,11 @@
     <parent>
         <groupId>com.rnb.newbase</groupId>
         <artifactId>newbase-parent</artifactId>
-        <version>0.0.4-SNAPSHOT</version>
+        <version>0.0.5-SNAPSHOT</version>
     </parent>
     <artifactId>security</artifactId>
     <groupId>com.rnb.newbase</groupId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Security for NewBase</description>
 
@@ -18,22 +18,22 @@
         <dependency>
             <groupId>com.rnb.newbase</groupId>
             <artifactId>toolkit</artifactId>
-            <version>0.0.4-SNAPSHOT</version>
+            <version>0.0.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.rnb.newbase</groupId>
             <artifactId>persistence</artifactId>
-            <version>0.0.4-SNAPSHOT</version>
+            <version>0.0.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.rnb.newbase</groupId>
             <artifactId>redis</artifactId>
-            <version>0.0.4-SNAPSHOT</version>
+            <version>0.0.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.rnb.newbase</groupId>
             <artifactId>aspect</artifactId>
-            <version>0.0.4-SNAPSHOT</version>
+            <version>0.0.5-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

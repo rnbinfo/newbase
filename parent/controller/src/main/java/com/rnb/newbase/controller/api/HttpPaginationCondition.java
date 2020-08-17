@@ -2,11 +2,16 @@ package com.rnb.newbase.controller.api;
 
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 @Data
 public class HttpPaginationCondition <T extends Object> {
-
-    private int pageSize;
-    private int currentPage;
+    @NotNull
+    private Integer pageSize;
+    @NotNull
+    private Integer currentPage;
+    @Valid
     private T condition;
 
     public HttpPaginationCondition() {

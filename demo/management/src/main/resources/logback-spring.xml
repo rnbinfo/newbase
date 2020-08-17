@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>logback</contextName>
+
+    <!-- 开发、默认环境 只输出到控制台 -->
+    <springProfile name="default,dev">
+        <!--输出到控制台 -->
+        <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%red(%d{HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <root level="info">
+            <appender-ref ref="console"/>
+        </root>
+        <logger name="com.rnb" level="debug" additivity="false">
+            <appender-ref ref="console" />
+        </logger>
+    </springProfile>
+    <!-- 测试环境 -->
+    <springProfile name="test">
+        <!--按天生成日志 -->
+        <appender name="logFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>logs/application.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>5</maxHistory>
+                <totalSizeCap>5GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%red(%d{HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <root level="info">
+            <appender-ref ref="logFile"/>
+        </root>
+        <logger name="com.rnb" level="debug" additivity="false">
+            <appender-ref ref="logFile" />
+        </logger>
+    </springProfile>
+    <!-- 正式环境  -->
+    <springProfile name="prod">
+        <!--按天生成日志 -->
+        <appender name="logFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>logs/application.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>logs/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>60</maxHistory>
+                <totalSizeCap>5GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%red(%d{HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <root level="info">
+            <appender-ref ref="logFile"/>
+        </root>
+        <logger name="com.rnb" level="debug" additivity="false">
+            <appender-ref ref="logFile" />
+        </logger>
+    </springProfile>
+</configuration>

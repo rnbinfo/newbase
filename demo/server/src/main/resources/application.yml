@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    energy:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      mapper: classpath:mapper/**/*.xml
+      url: jdbc:mysql://localhost:3306/rnb_energy?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+      username: root
+      password: Mysql@local
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  messages:
+    basename: i18n/messages
+  profiles:
+    active: dev
+
+server:
+  port: 9701
+  servlet:
+    context-path: /energy-server
+  tomcat:
+    remote_ip_header: x-forwarded-for
+
+security:
+  db:
+    isCrypted: false
+    propertyKey:
+
+app:
+  auth:
+    session:
+      duration: 7d
+
+remote:
+  tuanyou:
+    protocol: https
+    host: test-mcs.czb365.com
+    port: 443
+    context: services
+    requestUris:
+      loginSimpleApp: /v3/begin/platformLoginSimpleAppV4
+      queryPriceByPhone: /v3/gas/queryPriceByPhone
+      getSecretCode: /v3/begin/getSecretCode
+      findRemoteTrades: /v3/orderws/platformOrderInfoV2
+      queryCoupons: /v3/coupon/couponsWithPage
+    channelId: 98657566
+    key: wechatw_api_h598657566
+    secret: 660c2ad8f859323362a3cda5460da508

@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    energy:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      mapper: classpath:mapper/**/*.xml
+      url: jdbc:mysql://localhost:3306/rnb_demo?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+      username: root
+      password: Mysql@local
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  messages:
+    basename: i18n/messages
+  profiles:
+    active: dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+
+security:
+  db:
+    isCrypted: false
+    propertyKey:
+
+remote:
+  server:
+    protocol: http
+    host: 127.0.0.1
+    port: 9701
+    context: demo-server
+    requestUris:
+      refreshParameter: /manage/refreshParameter
+      refreshDataDictionary: /manage/refreshDataDictionary
+  noauth:
+    protocol: http
+    host: 127.0.0.1
+    port: 9703
+    context: demo-noauth
+    requestUris:
+      refreshParameter: /manage/refreshParameter
+      refreshDataDictionary: /manage/refreshDataDictionary

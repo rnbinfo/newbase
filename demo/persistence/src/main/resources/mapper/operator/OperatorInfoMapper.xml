@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rnb.energy.persistence.mapper.operator.OperatorInfoMapper">
+  
+  <sql id="conditionColumn">
+    <if test="null != id">
+      and `id` = #{id}
+    </if>
+    <if test="null != account">
+      and `account` = #{account,jdbcType=VARCHAR}
+    </if>
+    <if test="null != name">
+       and `name` = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="null != mobile">
+       and `mobile` = #{mobile,jdbcType=VARCHAR}
+    </if>
+    <if test="null != email">
+       and `email` = #{email,jdbcType=VARCHAR}
+    </if>
+    <if test="null != status">
+       and `status` = #{status,jdbcType=CHAR}
+    </if>
+    <if test="null != systemUserId">
+       and `system_user_id` = #{systemUserId,jdbcType=BIGINT}
+    </if>
+  </sql>
+  
+  <sql id="setColumn">
+    <if test="null != account">
+      `account` = #{account,jdbcType=VARCHAR},
+    </if>
+    <if test="null != status">
+      `status` = #{status,jdbcType=CHAR},
+    </if>
+    <if test="null != systemUserId">
+      `system_user_id` = #{systemUserId,jdbcType=BIGINT},
+    </if>
+  </sql>
+  
+  <sql id="baseColumn">
+    `id`,
+    `account`,
+    `name`, 
+    `mobile`, 
+    `email`, 
+    `status`, 
+    `system_user_id`, 
+    `create_time`, 
+    `modify_time`
+  </sql>
+  
+  <resultMap id="resultMap" type="com.rnb.energy.entity.po.operator.OperatorInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="system_user_id" jdbcType="BIGINT" property="systemUserId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.rnb.energy.entity.po.operator.OperatorInfo" useGeneratedKeys="true">
+    insert into operator_info (
+      `account`,
+      `name`, 
+      `mobile`, 
+      `email`, 
+      `status`, 
+      `system_user_id`, 
+      `create_time`
+      )
+    values (
+      #{account,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR},
+      #{mobile,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, 
+      #{systemUserId,jdbcType=BIGINT}, 
+      now()
+      )
+  </insert>
+  
+  <update id="update" parameterType="com.rnb.energy.entity.po.operator.OperatorInfo">
+    update operator_info
+    <set>
+      <include refid="setColumn" />
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryById" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from operator_info
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryListByCondition" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from operator_info
+    <where>
+      <include refid="conditionColumn" />
+    </where>
+    ORDER BY
+        `id` ASC
+  </select>
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rnb.energy.persistence.mapper.system.SystemParameterMapper">
+  
+  <sql id="conditionColumn">
+    <if test="null != id">
+      and `id` = #{id}
+    </if>
+    <if test="null != type">
+       and `type` = #{type,typeHandler=com.rnb.energy.persistence.handler.ParameterTypeEnumTypeHandler}
+    </if>
+    <if test="null != type">
+      and `code` = #{type,jdbcType=CHAR}
+    </if>
+  </sql>
+  
+  <sql id="setColumn">
+    <if test="null != key">
+      `key` = #{key,jdbcType=VARCHAR},
+    </if>
+    <if test="null != value">
+      `value` = #{value,jdbcType=VARCHAR},
+    </if>
+  </sql>
+  
+  <sql id="baseColumn">
+    `id`,
+    `type`,
+    `code`,
+    `description`, 
+    `key`, 
+    `value`,
+    `create_time`, 
+    `modify_time`
+  </sql>
+  
+  <resultMap id="resultMap" type="com.rnb.energy.entity.po.system.SystemParameter">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" property="type" typeHandler="com.rnb.energy.persistence.handler.ParameterTypeEnumTypeHandler" />
+    <result column="code" jdbcType="CHAR" property="code" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="key" jdbcType="VARCHAR" property="key" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.rnb.energy.entity.po.system.SystemParameter" useGeneratedKeys="true">
+    insert into system_parameter (
+      `type`,
+      `code`,
+      `description`, 
+      `key`, 
+      `value`,
+      `create_time`
+      )
+    values (
+        #{type,typeHandler=com.rnb.energy.persistence.handler.ParameterTypeEnumTypeHandler},
+        #{code,jdbcType=CHAR},
+        #{description,jdbcType=VARCHAR},
+      #{key,jdbcType=VARCHAR},
+      #{value,jdbcType=VARCHAR},
+      now()
+      )
+  </insert>
+  
+  <update id="update" parameterType="com.rnb.energy.entity.po.system.SystemParameter">
+    update system_parameter
+    <set>
+      <include refid="setColumn" />
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryById" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from system_parameter
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryListByCondition" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from system_parameter
+    <where>
+      <include refid="conditionColumn" />
+    </where>
+    ORDER BY
+        `id` ASC
+  </select>
+</mapper>

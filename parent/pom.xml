@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rnb.newbase</groupId>
     <artifactId>newbase-parent</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
 
@@ -24,7 +24,7 @@
         <project.build.jdk.version>1.8</project.build.jdk.version>
         <java.version>1.8</java.version>
         <maven.test.skip>true</maven.test.skip>
-        <spring.framework.version>2.1.13.RELEASE</spring.framework.version>
+        <spring.framework.version>2.1.16.RELEASE</spring.framework.version>
     </properties>
 
     <modules>
@@ -46,12 +46,6 @@
     </modules>
 
     <dependencies>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.68</version>
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

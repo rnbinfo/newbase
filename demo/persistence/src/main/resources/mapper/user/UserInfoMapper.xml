@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rnb.energy.persistence.mapper.user.UserInfoMapper">
+  
+  <sql id="conditionColumn">
+    <if test="null != id">
+      and `id` = #{id}
+    </if>
+    <if test="null != accessorId">
+       and `accessor_id` = #{accessorId,jdbcType=BIGINT}
+    </if>
+    <if test="null != mobile">
+       and `mobile` = #{mobile,jdbcType=CHAR}
+    </if>
+    <if test="null != avatar">
+       and `avatar` = #{avatar,jdbcType=VARCHAR}
+    </if>
+    <if test="null != status">
+       and `status` = #{status,jdbcType=CHAR}
+    </if>
+  </sql>
+  
+  <sql id="setColumn">
+    <if test="null != avatar">
+      `avatar` = #{avatar,jdbcType=VARCHAR},
+    </if>
+    <if test="null != status">
+      `status` = #{status,jdbcType=CHAR},
+    </if>
+  </sql>
+  
+  <sql id="baseColumn">
+    `id`, 
+    `accessor_id`, 
+    `mobile`, 
+    `avatar`, 
+    `status`, 
+    `create_time`, 
+    `modify_time`
+  </sql>
+  
+  <resultMap id="resultMap" type="com.rnb.energy.entity.po.user.UserInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="accessor_id" jdbcType="BIGINT" property="accessorId" />
+    <result column="mobile" jdbcType="CHAR" property="mobile" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.rnb.energy.entity.po.user.UserInfo" useGeneratedKeys="true">
+    insert into user_info (
+      `accessor_id`, 
+      `mobile`, 
+      `avatar`, 
+      `status`, 
+      `create_time`
+      )
+    values (
+        #{accessorId,jdbcType=BIGINT}, 
+      #{mobile,jdbcType=CHAR}, 
+      #{avatar,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, 
+      now()
+      )
+  </insert>
+  
+  <update id="update" parameterType="com.rnb.energy.entity.po.user.UserInfo">
+    update user_info
+    <set>
+      <include refid="setColumn" />
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryById" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from user_info
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryListByCondition" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from user_info
+    <where>
+      <include refid="conditionColumn" />
+    </where>
+    ORDER BY
+        `id` ASC
+  </select>
+</mapper>

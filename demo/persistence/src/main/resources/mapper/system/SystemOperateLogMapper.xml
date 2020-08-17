@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rnb.energy.persistence.mapper.system.SystemOperateLogMapper">
+  
+  <sql id="conditionColumn">
+    <if test="null != id">
+      and `id` = #{id}
+    </if>
+    <if test="null != operatorId">
+       and `operator_id` = #{operatorId,jdbcType=BIGINT}
+    </if>
+    <if test="null != uri">
+       and `uri` = #{uri,jdbcType=VARCHAR}
+    </if>
+    <if test="null != request">
+       and `request` = #{request,jdbcType=LONGVARCHAR}
+    </if>
+    <if test="null != response">
+       and `response` = #{response,jdbcType=LONGVARCHAR}
+    </if>
+  </sql>
+  
+  <sql id="setColumn">
+    <if test="null != operatorId">
+      `operator_id` = #{operatorId,jdbcType=BIGINT},
+    </if>
+    <if test="null != uri">
+      `uri` = #{uri,jdbcType=VARCHAR},
+    </if>
+    <if test="null != request">
+      `request` = #{request,jdbcType=LONGVARCHAR},
+    </if>
+    <if test="null != response">
+      `response` = #{response,jdbcType=LONGVARCHAR},
+    </if>
+  </sql>
+  
+  <sql id="baseColumn">
+    `id`, 
+    `operator_id`, 
+    `uri`, 
+    `create_time`, 
+    `modify_time`
+  </sql>
+  
+  <resultMap id="resultMap" type="com.rnb.energy.entity.po.system.SystemOperateLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="operator_id" jdbcType="BIGINT" property="operatorId" />
+    <result column="uri" jdbcType="VARCHAR" property="uri" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="request" jdbcType="LONGVARCHAR" property="request" />
+    <result column="response" jdbcType="LONGVARCHAR" property="response" />
+  </resultMap>
+  
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.rnb.energy.entity.po.system.SystemOperateLog" useGeneratedKeys="true">
+    insert into system_operate_log (
+      `operator_id`, 
+      `uri`, 
+      `create_time`
+      `request`, 
+      `response`
+      )
+    values (
+        #{operatorId,jdbcType=BIGINT}, 
+      #{uri,jdbcType=VARCHAR}, 
+      now()
+      #{request,jdbcType=LONGVARCHAR}, 
+      #{response,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  
+  <update id="update" parameterType="com.rnb.energy.entity.po.system.SystemOperateLog">
+    update system_operate_log
+    <set>
+      <include refid="setColumn" />
+    </set>
+    where `id` = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryById" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from system_operate_log
+    where `id` = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryListByCondition" resultMap="resultMap">
+    select 
+    <include refid="baseColumn" />
+    from system_operate_log
+    <where>
+      <include refid="conditionColumn" />
+    </where>
+    ORDER BY
+        `id` ASC
+  </select>
+</mapper>

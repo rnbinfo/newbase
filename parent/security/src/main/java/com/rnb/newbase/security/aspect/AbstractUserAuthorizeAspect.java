@@ -1,6 +1,5 @@
 package com.rnb.newbase.security.aspect;
 
-import com.alibaba.fastjson.JSON;
 import com.rnb.newbase.controller.api.HttpFrontRequest;
 import com.rnb.newbase.exception.RnbRuntimeException;
 import com.rnb.newbase.security.config.constant.LoginConstant;
@@ -30,7 +29,13 @@ public abstract class AbstractUserAuthorizeAspect {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    protected String authMode;
+
+    public static final String AUTH_MODE_ALLOW = "allow";
+    public static final String AUTH_MODE_BLOCK = "block";
+
     public abstract void userAuthorize();
+    public abstract void setAuthMode(String authMode);
 
     @Before("userAuthorize()")
     public void doBefore(JoinPoint joinPoint) {
@@ -75,22 +80,25 @@ public abstract class AbstractUserAuthorizeAspect {
                         }
                         SystemUser systemUser = systemUserService.findUserWithAuthorizationById(new BigInteger(userId));
                         // 判断用户操作权限
-                        if (ListUtil.isNotEmpty(systemUser.getResources())) {
-                            boolean checkAuthorization = false;
-                            for (SystemResource resource : systemUser.getResources()) {
-                                if (requestUri.equals(resource.getUrl())) {
-                                    // 更新token有效时间
-                                    systemUserService.updateRedis(httpSessionId, sessionToken, new BigInteger(userId));
-                                    checkAuthorization = true;
+                        // 阻断模式下，用户名下权限必须有该资源权限。允许模式下，不验证
+                        if (AUTH_MODE_BLOCK.equals(getAuthMode())) {
+                            if (ListUtil.isNotEmpty(systemUser.getResources())) {
+                                boolean checkAuthorization = false;
+                                for (SystemResource resource : systemUser.getResources()) {
+                                    if (requestUri.equals(resource.getUrl())) {
+                                        // 更新token有效时间
+                                        systemUserService.updateRedis(httpSessionId, sessionToken, new BigInteger(userId));
+                                        checkAuthorization = true;
+                                    }
                                 }
-                            }
-                            if (!checkAuthorization) {
+                                if (!checkAuthorization) {
+                                    logger.error("User authorize failed! User no authorization, url[{}], request[{}]", requestUri, ((HttpFrontRequest) argObject));
+                                    throw new RnbRuntimeException("999401", "user.no.authorization");
+                                }
+                            } else {
                                 logger.error("User authorize failed! User no authorization, url[{}], request[{}]", requestUri, ((HttpFrontRequest) argObject));
                                 throw new RnbRuntimeException("999401", "user.no.authorization");
                             }
-                        } else {
-                            logger.error("User authorize failed! User no authorization, url[{}], request[{}]", requestUri, ((HttpFrontRequest) argObject));
-                            throw new RnbRuntimeException("999401", "user.no.authorization");
                         }
                     }
                 }
@@ -98,5 +106,13 @@ public abstract class AbstractUserAuthorizeAspect {
                 throw new RnbRuntimeException("999500", "error.request");
             }
         }
+    }
+
+    // 获取授权模式，默认为阻断模式
+    private String getAuthMode() {
+        if (StringUtil.isBlank(authMode)) {
+            return AUTH_MODE_BLOCK;
+        }
+        return authMode;
     }
 }

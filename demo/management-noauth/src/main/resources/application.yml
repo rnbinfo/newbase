@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    energy:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      mapper: classpath:mapper/**/*.xml
+      url: jdbc:mysql://localhost:3306/rnb_energy?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8
+      username: root
+      password: Mysql@local
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  messages:
+    basename: i18n/messages
+  profiles:
+    active: dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+
+server:
+  port: 9703
+  servlet:
+    context-path: /energy-accessor
+  tomcat:
+    remote_ip_header: x-forwarded-for
+
+security:
+  db:
+    isCrypted: false
+    propertyKey:
+
+app:
+  auth:
+    session:
+      duration: 1h
+    mode: allow
+  verifyCode:
+    return: true
+

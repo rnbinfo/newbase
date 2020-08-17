@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>demo-base</artifactId>
+        <groupId>com.rnb.demo</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>entity</artifactId>
+
+    <!-- framework -->
+    <dependencies>
+        <dependency>
+            <groupId>${newbase.groupId}</groupId>
+            <artifactId>entity</artifactId>
+            <version>${newbase.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${newbase.groupId}</groupId>
+            <artifactId>api</artifactId>
+            <version>${newbase.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>demo-entity</finalName>
+    </build>
+</project>

@@ -1,7 +1,5 @@
 package com.rnb.newbase.service.base;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
 import com.rnb.newbase.entity.AbstractEntity;
 import com.rnb.newbase.persistence.dao.BaseDao;
 import org.slf4j.Logger;
@@ -9,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 
 public abstract class BaseService<T extends AbstractEntity> {
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -20,8 +17,20 @@ public abstract class BaseService<T extends AbstractEntity> {
         return getBaseDao().insert(t);
     }
 
+    public T insertReturnObject(T t) {
+        getBaseDao().insert(t);
+        T insertedT = queryById(t.getId());
+        return insertedT;
+    }
+
     public int update(T t) {
         return getBaseDao().update(t);
+    }
+
+    public T updateReturnObject(T t) {
+        getBaseDao().update(t);
+        T updatedT = queryById(t.getId());
+        return updatedT;
     }
 
     public T queryById(BigInteger id) {
@@ -48,13 +57,5 @@ public abstract class BaseService<T extends AbstractEntity> {
             updateCount = update(t);
         }
         return updateCount;
-    }
-
-    // 将对象转换成map
-    protected Map<String, Object> convertConditionToMap(Object conditionObject) {
-        String conditionString = JSONObject.toJSONString(conditionObject);
-        Map<String, Object> condition = JSONObject.parseObject(conditionString, new TypeReference<Map<String, Object>>() {
-        });
-        return condition;
     }
 }

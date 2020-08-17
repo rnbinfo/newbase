@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.rnb.newbase</groupId>
         <artifactId>newbase-parent</artifactId>
-        <version>0.0.4-SNAPSHOT</version>
+        <version>0.0.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 	<groupId>com.rnb.newbase</groupId>
     <artifactId>toolkit</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
 	<name>${project.artifactId}</name>
     <description>Toolkit for NewBase</description>
 
@@ -26,6 +26,22 @@
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.64</version>
         </dependency>
+        <!-- slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
+        </dependency>
         <!-- Tools -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -33,14 +49,9 @@
             <version>3.8.1</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>2.9.10</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.10.5</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.70</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -73,14 +84,11 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
-
         <!-- plugin -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>1.18.12</version>
         </dependency>
-
     </dependencies>
-	
 </project>

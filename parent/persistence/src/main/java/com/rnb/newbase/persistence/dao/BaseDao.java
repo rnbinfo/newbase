@@ -19,7 +19,7 @@ public abstract class BaseDao<T> {
         try {
             insertResult = getBaseMapper().insert(t);
         } catch (Exception e) {
-            logger.error("Newbase Persistence Insert Failed! Object[{}]=>[{}]", t.getClass().getName(), JSON.toJSON(t));
+            logger.error("Newbase Persistence Insert Failed! Object[{}]=>[{}]", t.getClass().getName(), JSON.toJSONString(t));
             throw e;
         }
         return insertResult;
@@ -30,7 +30,7 @@ public abstract class BaseDao<T> {
         try {
             updateResult = getBaseMapper().update(t);
         } catch (Exception e) {
-            logger.error("Newbase Persistence Update Failed! Object[{}]=>[{}]", t.getClass().getName(), JSON.toJSON(t));
+            logger.error("Newbase Persistence Update Failed! Object[{}]=>[{}]", t.getClass().getName(), JSON.toJSONString(t));
             throw e;
         }
         return updateResult;
