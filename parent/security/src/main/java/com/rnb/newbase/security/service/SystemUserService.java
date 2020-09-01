@@ -9,6 +9,7 @@ import com.rnb.newbase.security.persistent.entity.SystemResource;
 import com.rnb.newbase.security.persistent.entity.SystemRole;
 import com.rnb.newbase.security.persistent.entity.SystemUser;
 import com.rnb.newbase.security.persistent.entity.SystemUserWeixin;
+import com.rnb.newbase.security.persistent.entity.constant.SystemResourceType;
 import com.rnb.newbase.service.base.BaseService;
 import com.rnb.newbase.toolkit.security.BCryptPasswordEncoder;
 import com.rnb.newbase.toolkit.util.ListUtil;
@@ -21,10 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -267,6 +265,49 @@ public class SystemUserService extends BaseService<SystemUser> {
     public SystemUser findUserWithAuthorizationById(BigInteger id) {
         SystemUser systemUser = systemUserDao.queryById(id);
         return findUserWithAuthorization(systemUser);
+    }
+
+    /**
+     * 获取用户已授权菜单
+     * @param systemUser
+     * @return
+     */
+    public List<SystemResource> findUserAuthorizedMenus(SystemUser systemUser) {
+        SystemUser systemUserWithAuthorization = findUserWithAuthorization(systemUser);
+        if (systemUserWithAuthorization == null) {
+            return new ArrayList<>();
+        }
+        List<SystemResource> allResources = systemUserWithAuthorization.getResources();
+        List<SystemResource> allMenuResources = new ArrayList<>();
+        List<SystemResource> menuResources = new ArrayList<>();
+        // 先生菜单授权资源和查找根结点菜单
+        for(SystemResource systemResource : allResources) {
+            if (SystemResourceType.FRONT_MENU.equals(systemResource.getType())) {
+                allMenuResources.add(systemResource);
+                if (systemResource.getParentId() == null) {
+                    menuResources.add(systemResource);
+                }
+            }
+        }
+        // 遍历生成菜单结构
+        for(SystemResource rootResource : menuResources) {
+            rootResource = handleTreeResource(rootResource, allMenuResources);
+        }
+        return menuResources;
+    }
+
+    // 递归生成授权资源树结构
+    private SystemResource handleTreeResource(SystemResource parent, List<SystemResource> allResources) {
+        for (SystemResource childResource : allResources) {
+            if(Objects.equals(parent.getId(), childResource.getParentId())) {
+                childResource = handleTreeResource(childResource, allResources);
+                if (parent.getChildSystemResources() == null) {
+                    parent.setChildSystemResources(new ArrayList<>());
+                }
+                parent.getChildSystemResources().add(childResource);
+            }
+        }
+        return parent;
     }
 
     /**

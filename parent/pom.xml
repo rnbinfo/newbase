@@ -25,6 +25,7 @@
         <java.version>1.8</java.version>
         <maven.test.skip>true</maven.test.skip>
         <spring.framework.version>2.1.16.RELEASE</spring.framework.version>
+        <spring.cloud.version>Greenwich.SR6</spring.cloud.version>
     </properties>
 
     <modules>
@@ -43,6 +44,8 @@
         <module>service</module>
         <module>api</module>
         <module>swagger</module>
+        <module>cloud-server</module>
+        <module>cloud-client</module>
     </modules>
 
     <dependencies>
