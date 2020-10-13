@@ -42,7 +42,7 @@ public class SystemUserService extends BaseService<SystemUser> {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-    @Value("${app.auth.session.duration}")
+    @Value("${app.auth.session.duration:30m}")
     private String duration;
 
     /**
@@ -208,9 +208,6 @@ public class SystemUserService extends BaseService<SystemUser> {
      */
     public void updateRedis(String sessionId, String loginToken, BigInteger userId) {
         // 获取时间周期
-        if (StringUtil.isBlank(duration)) {
-            duration = "30m";
-        }
         Long durationPeriod = new Long(duration.substring(0, duration.length() - 1));
         switch(duration.substring(duration.length() - 1)) {
             case "d":
