@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseDao<T> {
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -44,9 +45,18 @@ public abstract class BaseDao<T> {
         return getBaseMapper().queryListByCondition(condition);
     }
 
+    public List<T> querySortedListByCondition(T condition, Map<String, String> sorts) {
+        return getBaseMapper().querySortedListByCondition(condition, sorts);
+    }
+
     public List<T> queryPagesByCondition(int pageNum, int pageSize,T condition) {
         PageHelper.startPage(pageNum,pageSize);
         return getBaseMapper().queryListByCondition(condition);
+    }
+
+    public List<T> queryPagesSortedByCondition(int pageNum, int pageSize,T condition, Map<String, String> sorts) {
+        PageHelper.startPage(pageNum,pageSize);
+        return getBaseMapper().querySortedListByCondition(condition, sorts);
     }
 
     public T queryOneByCondition(T condition) {
@@ -59,4 +69,6 @@ public abstract class BaseDao<T> {
             return null;
         }
     }
+
+
 }

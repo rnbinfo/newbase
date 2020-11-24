@@ -1,13 +1,10 @@
 package com.rnb.newbase.controller.api;
 
 import com.github.pagehelper.Page;
-import lombok.Data;
 
 import java.util.List;
 
-@Data
 public class HttpPaginationRepertory<T extends Object> {
-
     private int currentIndex = 0;
     private long totalCount = 0;
     private int totalPage;
@@ -31,4 +28,35 @@ public class HttpPaginationRepertory<T extends Object> {
         totalPage = result.getTotalPage();
     }
 
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    public void setCurrentIndex(int currentIndex) {
+        this.currentIndex = currentIndex;
+    }
+
+    public long getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(long totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List<T> getPageItems() {
+        return pageItems;
+    }
+
+    public void setPageItems(List<T> pageItems) {
+        this.pageItems = pageItems;
+    }
 }

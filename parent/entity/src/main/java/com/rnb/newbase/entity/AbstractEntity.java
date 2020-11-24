@@ -1,13 +1,34 @@
 package com.rnb.newbase.entity;
 
-import lombok.Data;
-
 import java.math.BigInteger;
 import java.util.Date;
 
-@Data
 public abstract class AbstractEntity {
     protected BigInteger id;
     private Date createTime;
     private Date modifyTime;
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
 }

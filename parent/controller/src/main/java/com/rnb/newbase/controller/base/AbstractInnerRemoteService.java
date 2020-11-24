@@ -14,9 +14,7 @@ public abstract class AbstractInnerRemoteService extends BaseRemoteService {
      */
     protected String generateInnerRequest(Object requestBody, String requestUri) {
         HttpInnerRequestHeader header = new HttpInnerRequestHeader();
-        header.setMethod(requestUri);
         header.setRequestSys("management");
-        header.setRequestNo(String.valueOf(System.currentTimeMillis()));
         header.setNonce(RandomUtil.generateNoSymbleString(21));
         header.setVersion("1.0");
         header.setSign("aaa");

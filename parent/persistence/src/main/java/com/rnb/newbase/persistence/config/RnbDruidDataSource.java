@@ -9,7 +9,6 @@ public class RnbDruidDataSource extends DruidDataSource {
     private String key;
     @Value("${security.db.isCrypted:false}")
     private Boolean isCrypted;
-    public static String securityMapperLocation = "classpath:mapper/newbase/security/*.xml";
 
     @Override
     public void setPassword(String cryptedPassword) {

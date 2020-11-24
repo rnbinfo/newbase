@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rnb.newbase</groupId>
     <artifactId>newbase-parent</artifactId>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
 
@@ -21,11 +21,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.jdk.version>1.8</project.build.jdk.version>
-        <java.version>1.8</java.version>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
         <maven.test.skip>true</maven.test.skip>
-        <spring.framework.version>2.1.16.RELEASE</spring.framework.version>
-        <spring.cloud.version>Greenwich.SR6</spring.cloud.version>
+        <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
+        <spring.cloud.version>Hoxton.SR9</spring.cloud.version>
     </properties>
 
     <modules>
@@ -34,7 +34,6 @@
         <module>toolkit</module>
         <module>entity</module>
         <module>exception</module>
-        <module>security</module>
         <module>web</module>
         <module>mail</module>
         <module>rabbitmq</module>
@@ -70,7 +69,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.0</version>
                 <configuration>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
@@ -80,8 +79,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${project.build.jdk.version}</source>
-                    <target>${project.build.jdk.version}</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>

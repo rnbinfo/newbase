@@ -52,7 +52,6 @@ public abstract class BaseRemoteService {
             this.setDeviceType("");
             this.setLoginToken("");
             this.setNonce("");
-            this.setRequestNo(String.valueOf(System.currentTimeMillis()));
             this.setRequestToken("");
             this.setTimestamp(new Date());
             this.setVersion("1.0");

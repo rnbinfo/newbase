@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseService<T extends AbstractEntity> {
     protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -33,22 +34,6 @@ public abstract class BaseService<T extends AbstractEntity> {
         return updatedT;
     }
 
-    public T queryById(BigInteger id) {
-        return getBaseDao().queryById(id);
-    }
-
-    public List<T> queryListByCondition(T condition) {
-        return getBaseDao().queryListByCondition(condition);
-    }
-
-    public List<T> queryPagesByCondition(int pageNum, int pageSize, T condition) {
-        return getBaseDao().queryPagesByCondition(pageNum, pageSize, condition);
-    }
-
-    public T queryOneByCondition(T condition) {
-        return getBaseDao().queryOneByCondition(condition);
-    }
-
     public int insertOrUpdate(T t) {
         int updateCount = 0;
         if (t.getId() == null) {
@@ -58,4 +43,29 @@ public abstract class BaseService<T extends AbstractEntity> {
         }
         return updateCount;
     }
+
+    public T queryById(BigInteger id) {
+        return getBaseDao().queryById(id);
+    }
+
+    public List<T> queryListByCondition(T condition) {
+        return getBaseDao().queryListByCondition(condition);
+    }
+
+    public List<T> querySortedListByCondition(T condition) {
+        return getBaseDao().queryListByCondition(condition);
+    }
+
+    public List<T> queryPagesByCondition(int pageNum, int pageSize, T condition) {
+        return getBaseDao().queryPagesByCondition(pageNum, pageSize, condition);
+    }
+
+    public List<T> queryPagesSortedByCondition(int pageNum, int pageSize, T condition, Map<String, String> sorts) {
+        return getBaseDao().queryPagesSortedByCondition(pageNum, pageSize, condition, sorts);
+    }
+
+    public T queryOneByCondition(T condition) {
+        return getBaseDao().queryOneByCondition(condition);
+    }
+
 }
