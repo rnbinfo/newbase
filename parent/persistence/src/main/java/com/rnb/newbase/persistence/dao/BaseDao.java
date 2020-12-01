@@ -2,6 +2,8 @@ package com.rnb.newbase.persistence.dao;
 
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
+import com.rnb.newbase.exception.NewbaseExceptionConstants;
+import com.rnb.newbase.exception.RnbRuntimeException;
 import com.rnb.newbase.persistence.mapper.BaseMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,16 +48,22 @@ public abstract class BaseDao<T> {
     }
 
     public List<T> querySortedListByCondition(T condition, Map<String, String> sorts) {
+        for (String column : sorts.keySet()) {
+            if (!"asc".equalsIgnoreCase(sorts.get(column)) && !"desc".equalsIgnoreCase(sorts.get(column))) {
+                logger.error("querySortedListByCondition sorts error! sorts[{}]", sorts);
+                throw new RnbRuntimeException(NewbaseExceptionConstants.MYBATIS_SORTS_ERROR);
+            }
+        }
         return getBaseMapper().querySortedListByCondition(condition, sorts);
     }
 
-    public List<T> queryPagesByCondition(int pageNum, int pageSize,T condition) {
-        PageHelper.startPage(pageNum,pageSize);
+    public List<T> queryPagesByCondition(int pageNum, int pageSize, T condition) {
+        PageHelper.startPage(pageNum, pageSize);
         return getBaseMapper().queryListByCondition(condition);
     }
 
-    public List<T> queryPagesSortedByCondition(int pageNum, int pageSize,T condition, Map<String, String> sorts) {
-        PageHelper.startPage(pageNum,pageSize);
+    public List<T> queryPagesSortedByCondition(int pageNum, int pageSize, T condition, Map<String, String> sorts) {
+        PageHelper.startPage(pageNum, pageSize);
         return getBaseMapper().querySortedListByCondition(condition, sorts);
     }
 

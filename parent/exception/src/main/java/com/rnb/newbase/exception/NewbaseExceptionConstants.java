@@ -15,7 +15,9 @@ public enum NewbaseExceptionConstants implements IRnbExceptionInfo {
     SECURITY_USER_EXISTED("910004", "security.user.existed"),
     SECURITY_USER_NOT_EXISTED("910005", "security.not.user.existed"),
     SECURITY_ROLE_NOT_EXISTED("910006", "security.role.not.existed"),
-    SECURITY_PASSWORD_NOT_MATCH("910007", "security.password.not.match");
+    SECURITY_PASSWORD_NOT_MATCH("910007", "security.password.not.match"),
+
+    MYBATIS_SORTS_ERROR("920001", "mybatis.sorts.error");
 
     private String errorCode;
     private String errorMessage;
