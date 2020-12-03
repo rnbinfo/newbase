@@ -21,7 +21,7 @@ public class FileUtil {
     /**
      * 获取指定路径下所有文件名称集合
      *
-     * @param path 所需查询的路径
+     * @param path   所需查询的路径
      * @param suffix 文件后缀
      * @return
      */
@@ -63,8 +63,8 @@ public class FileUtil {
      *
      * @param dir 将要删除的文件目录
      * @return boolean Returns "true" if all deletions were successful. If a
-     *         deletion fails, the method stops attempting to delete and returns
-     *         "false".
+     * deletion fails, the method stops attempting to delete and returns
+     * "false".
      */
     public static boolean delDir(File dir) {
         if (dir.isDirectory()) {
@@ -79,6 +79,35 @@ public class FileUtil {
         }
         // 目录此时为空，可以删除
         return dir.delete();
+    }
+
+    /**
+     * 创建指定的目录。
+     * 如果指定的目录的父目录不存在则创建其目录书上所有需要的父目录。
+     * <b>注意：可能会在返回false的时候创建部分父目录。</b>
+     * @param file 要创建的目录
+     * @return 完全创建成功时返回true，否则返回false。
+     * @since  1.0
+     */
+    public static boolean makeDir(File file) {
+        File parent = file.getParentFile();
+        if (parent != null) {
+            return parent.mkdirs();
+        }
+        return false;
+    }
+
+    /**
+     * 创建指定的目录。
+     * 如果指定的目录的父目录不存在则创建其目录书上所有需要的父目录。
+     * <b>注意：可能会在返回false的时候创建部分父目录。</b>
+     * @param fileName 要创建的目录的目录名
+     * @return 完全创建成功时返回true，否则返回false。
+     * @since  1.0
+     */
+    public static boolean makeDir(String fileName) {
+        File file = new File(fileName);
+        return makeDir(file);
     }
 
     /**
@@ -169,7 +198,8 @@ public class FileUtil {
 
     /**
      * 按行读取文件
-     * @param filename 含路径文件
+     *
+     * @param filename  含路径文件
      * @param character 文件字符集
      * @return
      */
@@ -195,6 +225,47 @@ public class FileUtil {
             return f.length();
         } else {
             return 0;
+        }
+    }
+
+    /**
+     * 创建文件
+     *
+     * @param filePath
+     */
+    public static void createNewFile(String filePath) {
+        File myFilePath = new File(filePath);
+        try {
+            if (!myFilePath.exists()) {
+                myFilePath.createNewFile();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 写入文件
+     *
+     * @param filePath
+     * @param content
+     * @param isAppend
+     * @param encode
+     */
+    public static void writeToFile(String filePath, String content, boolean isAppend, String encode) {
+        try {
+            File file = new File(filePath);
+            if (!file.exists())
+                createNewFile(filePath);
+            FileOutputStream out = new FileOutputStream(file, isAppend);
+            StringBuffer stringBuffer = new StringBuffer();
+            stringBuffer.append(content);
+            out.write(stringBuffer.toString().getBytes(encode));
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }
