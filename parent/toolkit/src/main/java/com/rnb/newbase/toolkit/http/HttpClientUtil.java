@@ -111,7 +111,6 @@ public class HttpClientUtil {
 
     /**
      * 向指定URL发送GET方法的请求
-     * 使用CloseableHttpClient方式
      *
      * @param url   发送请求的URL
      * @param agent 请求的agent头
@@ -145,7 +144,6 @@ public class HttpClientUtil {
 
     /**
      * 向指定URL发送GET方法的请求（通过代理方式）
-     * 使用CloseableHttpClient方式
      *
      * @param url   发送请求的URL
      * @param agent 请求的agent头
@@ -153,71 +151,36 @@ public class HttpClientUtil {
      */
     public static String sendGetWithProxy(String url, String agent, String proxyHost, int proxyPort) throws IOException {
         String result = null;
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        // 创建 HttpGet
-        HttpGet httpGet = new HttpGet(url);
-        httpGet.setHeader("User-Agent", StringUtil.isBlank(agent) ? MAC_CHROME_USER_AGENT : agent);
-        httpGet.setConfig(
-                RequestConfig.custom()
-                        .setProxy(new HttpHost(proxyHost, proxyPort, "HTTP"))
-                        .build()
-        );
-        // 执行get请求
-        logger.debug("Do get to url[{}] by CloseableHttpClient", url);
-        CloseableHttpResponse response = httpclient.execute(httpGet);
-        logger.debug("Do get response[{}]", response.toString());
-        try {
-            // 获取响应结果
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode == HttpStatus.SC_OK) {
-                HttpEntity responseEntity = response.getEntity();
-                result = EntityUtils.toString(responseEntity, DEFAULT_CHARSET);
-            } else {
-                throw new RuntimeException("Response status:" + statusCode);
+        if (StringUtil.isBlank(proxyHost)) {
+            result = sendGet(url, agent);
+        } else {
+            CloseableHttpClient httpclient = HttpClients.createDefault();
+            // 创建 HttpGet
+            HttpGet httpGet = new HttpGet(url);
+            httpGet.setHeader("User-Agent", StringUtil.isBlank(agent) ? MAC_CHROME_USER_AGENT : agent);
+            httpGet.setConfig(
+                    RequestConfig.custom()
+                            .setProxy(new HttpHost(proxyHost, proxyPort, "HTTP"))
+                            .build()
+            );
+            // 执行get请求
+            logger.debug("Do get to url[{}] by CloseableHttpClient", url);
+            CloseableHttpResponse response = httpclient.execute(httpGet);
+            logger.debug("Do get response[{}]", response.toString());
+            try {
+                // 获取响应结果
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == HttpStatus.SC_OK) {
+                    HttpEntity responseEntity = response.getEntity();
+                    result = EntityUtils.toString(responseEntity, DEFAULT_CHARSET);
+                } else {
+                    throw new RuntimeException("Response status:" + statusCode);
+                }
+            } finally {
+                response.close();
+                httpclient.close();
             }
-        } finally {
-            response.close();
-            httpclient.close();
         }
         return result;
-    }
-
-    /**
-     * 向指定URL发送GET方法的请求
-     * 使用HttpURLConnection方式
-     *
-     * @param url
-     * @param agent
-     * @return
-     * @throws Exception
-     */
-    public static String doGet(String url, String agent) {
-        try {
-            URL urlObject = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
-            //默认值我GET
-            connection.setRequestMethod("GET");
-            //添加请求头
-            connection.setRequestProperty("User-Agent", StringUtil.isBlank(agent) ? MAC_CHROME_USER_AGENT : agent);
-            logger.debug("Do get to url[{}] by HttpURLConnection", url);
-            connection.connect();
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpStatus.SC_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuffer response = new StringBuffer();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-                return response.toString();
-            } else {
-                throw new RuntimeException("Response status:" + responseCode);
-            }
-        } catch (Exception e) {
-            logger.error("Send get request exception!");
-            logger.error("Exception => ", e);
-        }
-        return null;
     }
 }
