@@ -52,8 +52,8 @@ public abstract class BaseService<T extends AbstractEntity> {
         return getBaseDao().queryListByCondition(condition);
     }
 
-    public List<T> querySortedListByCondition(T condition) {
-        return getBaseDao().queryListByCondition(condition);
+    public List<T> querySortedListByCondition(T condition, Map<String, String> sorts) {
+        return getBaseDao().querySortedListByCondition(condition, sorts);
     }
 
     public List<T> queryPagesByCondition(int pageNum, int pageSize, T condition) {
