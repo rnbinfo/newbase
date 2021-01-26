@@ -8,6 +8,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -66,7 +67,7 @@ public class HttpClientUtil {
         return result;
     }
 
-    public static String doJsonPost(String url, String jsonData, int timeout) throws Exception {
+    public static String doJsonPost(String url, Map<String, String> headers,  String jsonData, int timeout) throws Exception {
         CloseableHttpResponse response = null;
         CloseableHttpClient client = null;
         String result = "";
@@ -75,12 +76,17 @@ public class HttpClientUtil {
             cm.setDefaultMaxPerRoute(MAX_CONN_PERROUTE);
             cm.setMaxTotal(MAX_CONN_TOTAL);
             client = HttpClients.custom().setConnectionManager(cm).build();
-            HttpPost httppost = new HttpPost(url);
+            HttpPost httpPost = new HttpPost(url);
             StringEntity requestEntity = new StringEntity(jsonData, Charset.forName(DEFAULT_CHARSET));
             requestEntity.setContentType("application/json");
-            httppost.setEntity(requestEntity);
+            httpPost.setEntity(requestEntity);
+            if (headers != null) {
+                for (String headerKey : headers.keySet()) {
+                    httpPost.addHeader(headerKey, headers.get(headerKey));
+                }
+            }
             logger.debug("Do json post to url[{}], jsonData[{}]", url, jsonData);
-            result = sendPost(client, httppost, timeout < DEFAULT_TIMEOUT ? DEFAULT_TIMEOUT : timeout);
+            result = sendPost(client, httpPost, timeout < DEFAULT_TIMEOUT ? DEFAULT_TIMEOUT : timeout);
             logger.debug("Do json post response[{}]", result);
         } finally {
             if (response != null)
@@ -89,6 +95,44 @@ public class HttpClientUtil {
                 client.close();
         }
         return result;
+    }
+
+    public static String doJsonPost(String url, String jsonData, int timeout) throws Exception {
+        return doJsonPost(url, null,  jsonData, timeout);
+    }
+
+    public static String doJsonPatch(String url, Map<String, String> headers,  String jsonData, int timeout) throws Exception {
+        CloseableHttpResponse response = null;
+        CloseableHttpClient client = null;
+        String result = "";
+        try {
+            PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
+            cm.setDefaultMaxPerRoute(MAX_CONN_PERROUTE);
+            cm.setMaxTotal(MAX_CONN_TOTAL);
+            client = HttpClients.custom().setConnectionManager(cm).build();
+            HttpPatch httpPatch = new HttpPatch(url);
+            StringEntity requestEntity = new StringEntity(jsonData, Charset.forName(DEFAULT_CHARSET));
+            requestEntity.setContentType("application/json");
+            httpPatch.setEntity(requestEntity);
+            if (headers != null) {
+                for (String headerKey : headers.keySet()) {
+                    httpPatch.addHeader(headerKey, headers.get(headerKey));
+                }
+            }
+            logger.debug("Do json patch to url[{}], jsonData[{}]", url, jsonData);
+            result = setPatch(client, httpPatch, timeout < DEFAULT_TIMEOUT ? DEFAULT_TIMEOUT : timeout);
+            logger.debug("Do json patch response[{}]", result);
+        } finally {
+            if (response != null)
+                response.close();
+            if (client != null)
+                client.close();
+        }
+        return result;
+    }
+
+    public static String doJsonPatch(String url, String jsonData, int timeout) throws Exception {
+        return doJsonPatch(url, null,  jsonData, timeout);
     }
 
     private static String sendPost(CloseableHttpClient client, HttpPost httppost, int timeout) throws IOException {
@@ -104,7 +148,29 @@ public class HttpClientUtil {
             HttpEntity responseEntity = response.getEntity();
             result = EntityUtils.toString(responseEntity, DEFAULT_CHARSET);
         } else {
-            throw new RuntimeException("Response status:" + statusCode);
+            logger.error("Http response status: " + statusCode);
+            logger.error("Http response: " + EntityUtils.toString(response.getEntity()));
+            throw new RuntimeException("Http response status:" + statusCode);
+        }
+        return result;
+    }
+
+    private static String setPatch(CloseableHttpClient client, HttpPatch httpPatch, int timeout) throws IOException {
+        String result = null;
+        // 设置超时时间
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectionRequestTimeout(timeout).setConnectTimeout(timeout)
+                .setSocketTimeout(timeout).build();
+        httpPatch.setConfig(requestConfig);
+        CloseableHttpResponse response = client.execute(httpPatch);
+        int statusCode = response.getStatusLine().getStatusCode();
+        if (statusCode == HttpStatus.SC_OK) {
+            HttpEntity responseEntity = response.getEntity();
+            result = EntityUtils.toString(responseEntity, DEFAULT_CHARSET);
+        } else {
+            logger.error("Http response status: " + statusCode);
+            logger.error("Http response: " + EntityUtils.toString(response.getEntity()));
+            throw new RuntimeException("Http response status:" + statusCode);
         }
         return result;
     }
@@ -133,7 +199,9 @@ public class HttpClientUtil {
                 HttpEntity responseEntity = response.getEntity();
                 result = EntityUtils.toString(responseEntity, DEFAULT_CHARSET);
             } else {
-                throw new RuntimeException("Response status:" + statusCode);
+                logger.error("Http response status: " + statusCode);
+                logger.error("Http response: " + EntityUtils.toString(response.getEntity()));
+                throw new RuntimeException("Http response status:" + statusCode);
             }
         } finally {
             response.close();
@@ -174,7 +242,9 @@ public class HttpClientUtil {
                     HttpEntity responseEntity = response.getEntity();
                     result = EntityUtils.toString(responseEntity, DEFAULT_CHARSET);
                 } else {
-                    throw new RuntimeException("Response status:" + statusCode);
+                    logger.error("Http response status: " + statusCode);
+                    logger.error("Http response: " + EntityUtils.toString(response.getEntity()));
+                    throw new RuntimeException("Http response status:" + statusCode);
                 }
             } finally {
                 response.close();
