@@ -18,20 +18,21 @@ public class BaseColumnElementGenerator extends AbstractXmlElementGenerator {
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("sql"); //$NON-NLS-1$
-
-        answer.addAttribute(new Attribute("id", //$NON-NLS-1$
-                sqlId));
+        XmlElement answer = new XmlElement("sql");
+        answer.addAttribute(new Attribute("id", sqlId));
         StringBuilder sb = new StringBuilder();
-        Iterator<IntrospectedColumn> iter = introspectedTable
-                .getNonBLOBColumns().iterator();
+        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns().iterator();
         while (iter.hasNext()) {
-            sb.append("`");
-            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
-                    .next()));
+            answer.addElement(new TextElement(sb.toString()));
+            XmlElement include = new XmlElement("include");
+            include.addAttribute(new Attribute("refid", "tableName"));
+            answer.addElement(include);
+            answer.addElement(new TextElement(sb.toString()));
+            sb.append(".`");
+            sb.append(iter.next().getActualColumnName());
             sb.append("`");
             if (iter.hasNext()) {
-                sb.append(", "); //$NON-NLS-1$
+                sb.append(", \n");
             }
             answer.addElement(new TextElement(sb.toString()));
             sb.setLength(0);

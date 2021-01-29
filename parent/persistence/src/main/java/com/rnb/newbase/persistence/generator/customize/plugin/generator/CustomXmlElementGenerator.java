@@ -11,12 +11,14 @@ public class CustomXmlElementGenerator extends AbstractXmlElementGenerator {
     public void addElements(XmlElement parentElement) {
         addConditionColumn(parentElement);
         addSetColumn(parentElement);
+        addTableName(parentElement);
         addBaseColumn(parentElement);
         addResultMap(parentElement);
         addInsertSql(parentElement);
         addUpdateSql(parentElement);
         addSelectQueryById(parentElement);
         addSelectQueryListByCondition(parentElement);
+        addSelectQuerySortedListByCondition(parentElement);
     }
     //conditionColumn
     private void addConditionColumn(XmlElement parentElement) {
@@ -26,6 +28,11 @@ public class CustomXmlElementGenerator extends AbstractXmlElementGenerator {
     //setColumn
     private void addSetColumn(XmlElement parentElement) {
         AbstractXmlElementGenerator elementGenerator = new SetColumnElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+    //tableName
+    private void addTableName(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new TableNameElementGenerator();
         initializeAndExecuteGenerator(elementGenerator, parentElement);
     }
     //baseColumn
@@ -56,6 +63,11 @@ public class CustomXmlElementGenerator extends AbstractXmlElementGenerator {
     //select queryListByCondition
     private void addSelectQueryListByCondition(XmlElement parentElement) {
         AbstractXmlElementGenerator elementGenerator = new SelectQueryListByConditionElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+    //select querySortedListByCondition
+    private void addSelectQuerySortedListByCondition(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new SelectQuerySortedListByConditionElementGenerator();
         initializeAndExecuteGenerator(elementGenerator, parentElement);
     }
 

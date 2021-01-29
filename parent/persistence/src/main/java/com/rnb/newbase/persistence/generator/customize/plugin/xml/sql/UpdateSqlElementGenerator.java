@@ -16,10 +16,8 @@ public class UpdateSqlElementGenerator extends AbstractXmlElementGenerator {
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
-
-        answer.addAttribute(new Attribute("id", //$NON-NLS-1$
-                sqlId));
+        XmlElement answer = new XmlElement("update");
+        answer.addAttribute(new Attribute("id", sqlId));
         StringBuilder sb = new StringBuilder();
         String parameterType;
 
@@ -29,30 +27,21 @@ public class UpdateSqlElementGenerator extends AbstractXmlElementGenerator {
             parameterType = introspectedTable.getBaseRecordType();
         }
 
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType));
-        sb.append("update "); //$NON-NLS-1$
-        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+        answer.addAttribute(new Attribute("parameterType", parameterType));
+        sb.append("update "); 
+        // sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
-        XmlElement dynamicElement = new XmlElement("set"); //$NON-NLS-1$
+        XmlElement include = new XmlElement("include");
+        include.addAttribute(new Attribute("refid", "tableName"));
+        answer.addElement(include);
+        answer.addElement(new TextElement(sb.toString()));
+        XmlElement dynamicElement = new XmlElement("set"); 
         answer.addElement(dynamicElement);
-        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+        XmlElement includeElement = new XmlElement("include"); 
         includeElement.addAttribute(new Attribute("refid","setColumn"));
         dynamicElement.addElement(includeElement);
-        StringBuilder whereSql = new StringBuilder();
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getPrimaryKeyColumns()) {
-            whereSql.append("where "); //$NON-NLS-1$
-            whereSql.append("`");
-            whereSql.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            whereSql.append("`");
-            whereSql.append(" = "); //$NON-NLS-1$
-            whereSql.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
-            answer.addElement(new TextElement(whereSql.toString()));
-        }
-
+        StringBuilder whereSql = new StringBuilder().append("where `id` = #{id}");
+        answer.addElement(new TextElement(whereSql.toString()));
         parentElement.addElement(answer);
     }
 }

@@ -14,37 +14,33 @@ public class SelectQueryListByConditionElementGenerator extends AbstractXmlEleme
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
-
-        answer.addAttribute(new Attribute("id", //$NON-NLS-1$
-                sqlId));
-        answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
-                "resultMap"));
-
+        XmlElement answer = new XmlElement("select");
+        answer.addAttribute(new Attribute("id", sqlId));
+        answer.addAttribute(new Attribute("resultMap", "resultMap"));
         StringBuilder sb = new StringBuilder();
-        sb.append("select "); //$NON-NLS-1$
-
+        sb.append("select ");
         answer.addElement(new TextElement(sb.toString()));
-        XmlElement include = new XmlElement("include"); //$NON-NLS-1$
-        include.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                "baseColumn"));
+        XmlElement include = new XmlElement("include"); 
+        include.addAttribute(new Attribute("refid", "baseColumn"));
         answer.addElement(include);
         sb.setLength(0);
-        sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append("from "); 
+        //sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
-        XmlElement where = new XmlElement("where"); //$NON-NLS-1$
-        XmlElement include2 = new XmlElement("include"); //$NON-NLS-1$
-        include2.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                "conditionColumn"));
+        include = new XmlElement("include");
+        include.addAttribute(new Attribute("refid", "tableName"));
+        answer.addElement(include);
+        answer.addElement(new TextElement(sb.toString()));
+        XmlElement where = new XmlElement("where"); 
+        XmlElement include2 = new XmlElement("include"); 
+        include2.addAttribute(new Attribute("refid", "conditionColumn"));
         where.addElement(include2);
         answer.addElement(where);
         sb.setLength(0);
         sb.append("ORDER BY");
         sb.append("\n");
         sb.append("        ");
-        sb.append("`id` ASC");
+        sb.append("`id` DESC");
         answer.addElement(new TextElement(sb.toString()));
         parentElement.addElement(answer);
     }

@@ -43,6 +43,12 @@ public abstract class BaseDao<T> {
         return getBaseMapper().queryById(id);
     }
 
+    /**
+     * @deprecated Replaced by querySortedListByCondition
+     * @param condition
+     * @return
+     */
+    @Deprecated
     public List<T> queryListByCondition(T condition) {
         return getBaseMapper().queryListByCondition(condition);
     }
@@ -57,6 +63,12 @@ public abstract class BaseDao<T> {
         return getBaseMapper().querySortedListByCondition(condition, sorts);
     }
 
+    /**
+     * @deprecated Replaced by queryPagesSortedByCondition
+     * @param condition
+     * @return
+     */
+    @Deprecated
     public List<T> queryPagesByCondition(int pageNum, int pageSize, T condition) {
         PageHelper.startPage(pageNum, pageSize);
         return getBaseMapper().queryListByCondition(condition);

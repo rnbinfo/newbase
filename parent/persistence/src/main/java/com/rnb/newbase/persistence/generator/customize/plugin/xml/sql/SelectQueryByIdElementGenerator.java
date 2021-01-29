@@ -10,54 +10,45 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElem
 
 public class SelectQueryByIdElementGenerator extends AbstractXmlElementGenerator {
     private String sqlId = "queryById";
+
     public SelectQueryByIdElementGenerator() {
         super();
     }
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
-
-        answer.addAttribute(new Attribute("id", //$NON-NLS-1$
-                sqlId));
-        answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
-                "resultMap"));
-
+        XmlElement answer = new XmlElement("select");
+        answer.addAttribute(new Attribute("id", sqlId));
+        answer.addAttribute(new Attribute("resultMap", "resultMap"));
         StringBuilder sb = new StringBuilder();
-        sb.append("select "); //$NON-NLS-1$
-
-//        if (stringHasValue(introspectedTable
-//                .getSelectByPrimaryKeyQueryId())) {
-//            sb.append('\'');
-//            sb.append(introspectedTable.getSelectByPrimaryKeyQueryId());
-//            sb.append("' as QUERYID,"); //$NON-NLS-1$
-//        }
+        sb.append("select ");
         answer.addElement(new TextElement(sb.toString()));
-        XmlElement include = new XmlElement("include"); //$NON-NLS-1$
-        include.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                "baseColumn"));
+        XmlElement include = new XmlElement("include");
+        include.addAttribute(new Attribute("refid", "baseColumn"));
         answer.addElement(include);
         sb.setLength(0);
-        sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append("from ");
+        //sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
-
+        include = new XmlElement("include");
+        include.addAttribute(new Attribute("refid", "tableName"));
+        answer.addElement(include);
+        answer.addElement(new TextElement(sb.toString()));
         boolean and = false;
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getPrimaryKeyColumns()) {
             sb.setLength(0);
             if (and) {
-                sb.append("  and "); //$NON-NLS-1$
+                sb.append("  and "); 
             } else {
-                sb.append("where "); //$NON-NLS-1$
+                sb.append("where "); 
                 and = true;
             }
             sb.append("`");
             sb.append(MyBatis3FormattingUtilities
                     .getAliasedEscapedColumnName(introspectedColumn));
             sb.append("`");
-            sb.append(" = "); //$NON-NLS-1$
+            sb.append(" = "); 
             sb.append(MyBatis3FormattingUtilities
                     .getParameterClause(introspectedColumn));
             answer.addElement(new TextElement(sb.toString()));

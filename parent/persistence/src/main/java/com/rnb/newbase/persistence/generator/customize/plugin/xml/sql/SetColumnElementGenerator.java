@@ -6,6 +6,7 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
+import org.mybatis.generator.internal.util.StringUtility;
 
 
 public class SetColumnElementGenerator extends AbstractXmlElementGenerator {
@@ -16,28 +17,24 @@ public class SetColumnElementGenerator extends AbstractXmlElementGenerator {
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("sql"); //$NON-NLS-1$
-
-        answer.addAttribute(new Attribute("id", //$NON-NLS-1$
-                sqlId));
+        XmlElement answer = new XmlElement("sql");
+        answer.addAttribute(new Attribute("id", sqlId));
         StringBuilder sb = new StringBuilder();
         for(IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
-            XmlElement selectNotNullElement = new XmlElement("if"); //$NON-NLS-1$
-            sb.setLength(0);
-            sb.append("null != ");
-            sb.append(introspectedColumn.getJavaProperty());
-            selectNotNullElement.addAttribute(new Attribute("test", sb.toString()));
+            String columnName = MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
+            if (!"id".equals(columnName) && !"create_time".equals(columnName) && !"modify_time".equals(columnName))
             sb.setLength(0);
             sb.append("`");
-            sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+            sb.append(columnName);
             sb.append("`");
             // 添加等号
             sb.append(" = ");
-            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
-            sb.append(",");
-            selectNotNullElement.addElement(new TextElement(sb.toString()));
-            answer.addElement(selectNotNullElement);
+            sb.append("#{");
+            sb.append(introspectedColumn.getJavaProperty());
+            sb.append('}');
+            sb.append(", \n");
         }
+        answer.addElement(new TextElement(sb.toString()));
         parentElement.addElement(answer);
     }
 }

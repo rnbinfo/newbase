@@ -24,24 +24,16 @@ public class InsertSqlElementGenerator extends AbstractXmlElementGenerator {
 
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("insert"); //$NON-NLS-1$
-
-        answer.addAttribute(new Attribute("id", //$NON-NLS-1$
-                sqlId));
-
+        XmlElement answer = new XmlElement("insert");
+        answer.addAttribute(new Attribute("id", sqlId));
         StringBuilder insertClause = new StringBuilder();
-
         FullyQualifiedJavaType parameterType;
         if (isSimple) {
-            parameterType = new FullyQualifiedJavaType(
-                    introspectedTable.getBaseRecordType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         } else {
-            parameterType = introspectedTable.getRules()
-                    .calculateAllFieldsClass();
+            parameterType = introspectedTable.getRules().calculateAllFieldsClass();
         }
-
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType.getFullyQualifiedName()));
+        answer.addAttribute(new Attribute("parameterType", parameterType.getFullyQualifiedName()));
 
         GeneratedKey gk = introspectedTable.getGeneratedKey();
         if (gk != null) {
@@ -49,27 +41,28 @@ public class InsertSqlElementGenerator extends AbstractXmlElementGenerator {
                 // if the column is null, then it's a configuration error. The
                 // warning has already been reported
                 if (gk.isJdbcStandard()) {
-                    answer.addAttribute(new Attribute(
-                            "useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
-                    answer.addAttribute(new Attribute(
-                            "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-                    answer.addAttribute(new Attribute(
-                            "keyColumn", introspectedColumn.getActualColumnName())); //$NON-NLS-1$
+                    answer.addAttribute(new Attribute("useGeneratedKeys", "true"));  //$NON-NLS-2$
+                    answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty()));
+                    answer.addAttribute(new Attribute("keyColumn", introspectedColumn.getActualColumnName()));
                 } else {
                     answer.addElement(getSelectKey(introspectedColumn, gk));
                 }
             });
         }
 
-        insertClause.append("insert into "); //$NON-NLS-1$
-        insertClause.append(introspectedTable
-                .getFullyQualifiedTableNameAtRuntime());
-        insertClause.append(" ("); //$NON-NLS-1$
+        insertClause.append("insert into "); 
+        //insertClause.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+        answer.addElement(new TextElement(insertClause.toString()));
+        XmlElement include = new XmlElement("include");
+        include.addAttribute(new Attribute("refid", "tableName"));
+        answer.addElement(include);
+        answer.addElement(new TextElement(insertClause.toString()));
+        insertClause.append(" ("); 
         answer.addElement(new TextElement(insertClause.toString()));
         insertClause.setLength(0);
         OutputUtilities.xmlIndent(insertClause, 1);
         StringBuilder valuesClause = new StringBuilder();
-        valuesClause.append("values ("); //$NON-NLS-1$
+        valuesClause.append("values ("); 
         List<String> valuesClauses = new ArrayList<>();
         List<IntrospectedColumn> columns =
                 ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
@@ -80,23 +73,22 @@ public class InsertSqlElementGenerator extends AbstractXmlElementGenerator {
                 continue;
             }
             insertClause.append("`");
-            insertClause.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+            insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
             if(i==0){
                 valuesClause.append("\n");
                 valuesClause.append("        ");
             }
-            if(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn).equals("create_time")){
+            if(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn).equals("create_time")){
                 valuesClause.append("now()");
             }else{
-                valuesClause.append(MyBatis3FormattingUtilities
-                        .getParameterClause(introspectedColumn));
+                valuesClause.append("#{");
+                valuesClause.append(introspectedColumn.getJavaProperty());
+                valuesClause.append('}');
             }
             insertClause.append("`");
             if (i + 1 < columns.size() && !MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn).equals("create_time")) {
-                insertClause.append(", "); //$NON-NLS-1$
-                valuesClause.append(", "); //$NON-NLS-1$
+                insertClause.append(", "); 
+                valuesClause.append(", "); 
             }
 
             //换行和缩进
