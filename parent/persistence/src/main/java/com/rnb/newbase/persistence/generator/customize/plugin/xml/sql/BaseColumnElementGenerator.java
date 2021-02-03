@@ -32,7 +32,7 @@ public class BaseColumnElementGenerator extends AbstractXmlElementGenerator {
             sb.append(iter.next().getActualColumnName());
             sb.append("`");
             if (iter.hasNext()) {
-                sb.append(", \n");
+                sb.append(",");
             }
             answer.addElement(new TextElement(sb.toString()));
             sb.setLength(0);

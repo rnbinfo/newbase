@@ -53,11 +53,11 @@ public class InsertSqlElementGenerator extends AbstractXmlElementGenerator {
         insertClause.append("insert into "); 
         //insertClause.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(insertClause.toString()));
+        insertClause.setLength(0);
         XmlElement include = new XmlElement("include");
         include.addAttribute(new Attribute("refid", "tableName"));
         answer.addElement(include);
-        answer.addElement(new TextElement(insertClause.toString()));
-        insertClause.append(" ("); 
+        insertClause.append(" (");
         answer.addElement(new TextElement(insertClause.toString()));
         insertClause.setLength(0);
         OutputUtilities.xmlIndent(insertClause, 1);

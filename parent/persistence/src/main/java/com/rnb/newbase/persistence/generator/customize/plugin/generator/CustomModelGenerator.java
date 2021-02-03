@@ -18,16 +18,16 @@ public class CustomModelGenerator {
 
     //注解对应的完整的类路径
     private static List<FullyQualifiedJavaType> javaTypes(){
-        List<FullyQualifiedJavaType> javaTypes = new ArrayList<>(2);
-        javaTypes.add(new FullyQualifiedJavaType("lombok.Data"));
-        javaTypes.add(new FullyQualifiedJavaType("lombok.NoArgsConstructor"));
+        List<FullyQualifiedJavaType> javaTypes = new ArrayList<>();
+        // javaTypes.add(new FullyQualifiedJavaType("lombok.Data"));
+        // javaTypes.add(new FullyQualifiedJavaType("lombok.NoArgsConstructor"));
         return javaTypes;
     }
     //需要添加的注解
     private static List<String> addAnnons(){
-        List<String> annons = new ArrayList<>(2);
-        annons.add("@Data");
-        annons.add("@NoArgsConstructor");
+        List<String> annons = new ArrayList<>();
+        // annons.add("@Data");
+        // annons.add("@NoArgsConstructor");
         return annons;
     }
 }

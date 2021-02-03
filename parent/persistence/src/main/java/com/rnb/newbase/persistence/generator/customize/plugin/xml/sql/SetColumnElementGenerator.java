@@ -22,17 +22,18 @@ public class SetColumnElementGenerator extends AbstractXmlElementGenerator {
         StringBuilder sb = new StringBuilder();
         for(IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
             String columnName = MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
-            if (!"id".equals(columnName) && !"create_time".equals(columnName) && !"modify_time".equals(columnName))
-            sb.setLength(0);
-            sb.append("`");
-            sb.append(columnName);
-            sb.append("`");
-            // 添加等号
-            sb.append(" = ");
-            sb.append("#{");
-            sb.append(introspectedColumn.getJavaProperty());
-            sb.append('}');
-            sb.append(", \n");
+            if (!"id".equals(columnName) && !"create_time".equals(columnName) && !"modify_time".equals(columnName)) {
+                sb.setLength(0);
+                sb.append("`");
+                sb.append(columnName);
+                sb.append("`");
+                // 添加等号
+                sb.append(" = ");
+                sb.append("#{");
+                sb.append(introspectedColumn.getJavaProperty());
+                sb.append('}');
+                sb.append(", \n");
+            }
         }
         answer.addElement(new TextElement(sb.toString()));
         parentElement.addElement(answer);

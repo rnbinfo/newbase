@@ -34,7 +34,6 @@ public class UpdateSqlElementGenerator extends AbstractXmlElementGenerator {
         XmlElement include = new XmlElement("include");
         include.addAttribute(new Attribute("refid", "tableName"));
         answer.addElement(include);
-        answer.addElement(new TextElement(sb.toString()));
         XmlElement dynamicElement = new XmlElement("set"); 
         answer.addElement(dynamicElement);
         XmlElement includeElement = new XmlElement("include"); 

@@ -33,7 +33,6 @@ public class SelectQueryByIdElementGenerator extends AbstractXmlElementGenerator
         include = new XmlElement("include");
         include.addAttribute(new Attribute("refid", "tableName"));
         answer.addElement(include);
-        answer.addElement(new TextElement(sb.toString()));
         boolean and = false;
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getPrimaryKeyColumns()) {

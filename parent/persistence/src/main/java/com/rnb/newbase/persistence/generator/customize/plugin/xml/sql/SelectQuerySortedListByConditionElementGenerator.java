@@ -30,7 +30,6 @@ public class SelectQuerySortedListByConditionElementGenerator extends AbstractXm
         include = new XmlElement("include");
         include.addAttribute(new Attribute("refid", "tableName"));
         answer.addElement(include);
-        answer.addElement(new TextElement(sb.toString()));
         XmlElement where = new XmlElement("where"); 
         XmlElement include2 = new XmlElement("include"); 
         include2.addAttribute(new Attribute("refid", "conditionColumn"));
