@@ -1,5 +1,7 @@
 package com.rnb.newbase.entity;
 
+import com.alibaba.fastjson.JSON;
+
 import java.math.BigInteger;
 import java.util.Date;
 
@@ -30,5 +32,10 @@ public abstract class AbstractEntity {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getName() + " -> " + JSON.toJSONString(this);
     }
 }

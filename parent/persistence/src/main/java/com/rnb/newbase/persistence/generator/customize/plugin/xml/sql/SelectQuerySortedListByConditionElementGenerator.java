@@ -49,18 +49,17 @@ public class SelectQuerySortedListByConditionElementGenerator extends AbstractXm
         //		</choose>
         sb.setLength(0);
         XmlElement choose = new XmlElement("choose");
-        choose.addAttribute(new Attribute("test", "sorts != null and sorts.size > 0"));
-        sb.setLength(0);
+        XmlElement when = new XmlElement("when");
+        when.addAttribute(new Attribute("test", "sorts != null and sorts.size > 0"));
         sb.append("ORDER BY\n");
-        choose.addElement(new TextElement(sb.toString()));
+        when.addElement(new TextElement(sb.toString()));
         XmlElement foreach = new XmlElement("foreach");
         foreach.addAttribute(new Attribute("item", "value"));
         foreach.addAttribute(new Attribute("index", "key"));
         foreach.addAttribute(new Attribute("collection", "sorts.entrySet()"));
         foreach.addAttribute(new Attribute("separator", ","));
         foreach.addElement(new TextElement("`${key}` ${value}"));
-        choose.addElement(foreach);
-        XmlElement when = new XmlElement("when");
+        when.addElement(foreach);
         XmlElement otherwise = new XmlElement("otherwise");
         String otherwiseOrder = "ORDER BY `id` DESC";
         otherwise.addElement(new TextElement(otherwiseOrder));
