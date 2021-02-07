@@ -54,10 +54,12 @@ public abstract class BaseDao<T> {
     }
 
     public List<T> querySortedListByCondition(T condition, Map<String, String> sorts) {
-        for (String column : sorts.keySet()) {
-            if (!"asc".equalsIgnoreCase(sorts.get(column)) && !"desc".equalsIgnoreCase(sorts.get(column))) {
-                logger.error("querySortedListByCondition sorts error! sorts[{}]", sorts);
-                throw new RnbRuntimeException(NewbaseExceptionConstants.MYBATIS_SORTS_ERROR);
+        if (sorts != null) {
+            for (String column : sorts.keySet()) {
+                if (!"asc".equalsIgnoreCase(sorts.get(column)) && !"desc".equalsIgnoreCase(sorts.get(column))) {
+                    logger.error("querySortedListByCondition sorts error! sorts[{}]", sorts);
+                    throw new RnbRuntimeException(NewbaseExceptionConstants.MYBATIS_SORTS_ERROR);
+                }
             }
         }
         return getBaseMapper().querySortedListByCondition(condition, sorts);
@@ -76,6 +78,14 @@ public abstract class BaseDao<T> {
 
     public List<T> queryPagesSortedByCondition(int pageNum, int pageSize, T condition, Map<String, String> sorts) {
         PageHelper.startPage(pageNum, pageSize);
+        if (sorts != null) {
+            for (String column : sorts.keySet()) {
+                if (!"asc".equalsIgnoreCase(sorts.get(column)) && !"desc".equalsIgnoreCase(sorts.get(column))) {
+                    logger.error("querySortedListByCondition sorts error! sorts[{}]", sorts);
+                    throw new RnbRuntimeException(NewbaseExceptionConstants.MYBATIS_SORTS_ERROR);
+                }
+            }
+        }
         return getBaseMapper().querySortedListByCondition(condition, sorts);
     }
 

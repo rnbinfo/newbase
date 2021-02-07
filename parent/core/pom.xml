@@ -5,21 +5,23 @@
     <parent>
         <groupId>com.rnb.newbase</groupId>
 		<artifactId>newbase-parent</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>core</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.rnb.newbase</groupId>
-            <artifactId>exception</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-        </dependency>
+        <!-- spring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
             <version>${spring.boot.version}</version>
+        </dependency>
+        <!-- newbase framework -->
+        <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>exception</artifactId>
+            <version>${parent.version}</version>
         </dependency>
     </dependencies>
 </project>

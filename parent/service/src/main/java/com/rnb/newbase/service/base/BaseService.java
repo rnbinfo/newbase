@@ -48,28 +48,16 @@ public abstract class BaseService<T extends AbstractEntity> {
         return getBaseDao().queryById(id);
     }
 
-    /**
-     * @deprecated Replaced by querySortedListByCondition
-     * @param condition
-     * @return
-     */
-    @Deprecated
     public List<T> queryListByCondition(T condition) {
-        return getBaseDao().queryListByCondition(condition);
+        return this.querySortedListByCondition(condition, null);
     }
 
     public List<T> querySortedListByCondition(T condition, Map<String, String> sorts) {
         return getBaseDao().querySortedListByCondition(condition, sorts);
     }
 
-    /**
-     * @deprecated Replaced by queryPagesSortedByCondition
-     * @param condition
-     * @return
-     */
-    @Deprecated
     public List<T> queryPagesByCondition(int pageNum, int pageSize, T condition) {
-        return getBaseDao().queryPagesByCondition(pageNum, pageSize, condition);
+        return getBaseDao().queryPagesSortedByCondition(pageNum, pageSize, condition, null);
     }
 
     public List<T> queryPagesSortedByCondition(int pageNum, int pageSize, T condition, Map<String, String> sorts) {

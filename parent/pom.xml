@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.rnb.newbase</groupId>
     <artifactId>newbase-parent</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>${project.artifactId}</name>
 
@@ -24,7 +24,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <maven.test.skip>true</maven.test.skip>
-        <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
+        <spring.boot.version>2.3.8.RELEASE</spring.boot.version>
         <spring.cloud.version>Hoxton.SR9</spring.cloud.version>
     </properties>
 

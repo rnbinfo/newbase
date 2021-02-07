@@ -6,11 +6,12 @@
     <parent>
         <artifactId>newbase-parent</artifactId>
         <groupId>com.rnb.newbase</groupId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.1-SNAPSHOT</version>
     </parent>
     <artifactId>api</artifactId>
 
     <dependencies>
+        <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -29,6 +30,12 @@
                     <artifactId>spring-aop</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- newbase framework -->
+        <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>toolkit</artifactId>
+            <version>${parent.version}</version>
         </dependency>
     </dependencies>
 

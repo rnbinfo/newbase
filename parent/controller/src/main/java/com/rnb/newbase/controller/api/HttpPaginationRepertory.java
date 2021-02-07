@@ -28,6 +28,13 @@ public class HttpPaginationRepertory<T extends Object> {
         totalPage = result.getTotalPage();
     }
 
+    public HttpPaginationRepertory(List<T> queryPagedResult, Page pageObject){
+        this.totalCount = pageObject.getTotal();
+        this.pageItems = queryPagedResult;
+        currentIndex = pageObject.getPageNum();
+        totalPage = pageObject.getPages();
+    }
+
     public int getCurrentIndex() {
         return currentIndex;
     }
