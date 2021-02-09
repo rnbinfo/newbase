@@ -1,6 +1,5 @@
 package com.rnb.newbase.controller.base;
 
-import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
@@ -11,6 +10,7 @@ import com.rnb.newbase.controller.api.HttpResponse;
 import com.rnb.newbase.exception.NewbaseExceptionConstants;
 import com.rnb.newbase.exception.RnbRuntimeException;
 import com.rnb.newbase.toolkit.http.HttpClientUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

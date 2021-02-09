@@ -18,12 +18,6 @@
             <artifactId>spring-boot-starter-aop</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
-        <!-- newbase framework -->
-        <dependency>
-            <groupId>${parent.groupId}</groupId>
-            <artifactId>controller</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
     </dependencies>
 
 </project>

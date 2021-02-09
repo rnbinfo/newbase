@@ -7,11 +7,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.annotation.Resource;
 import java.util.Locale;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class RnbRuntimeExceptionHandler {
     @Resource
     private MessageSource messageSource;
