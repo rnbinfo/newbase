@@ -48,12 +48,12 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
     private void generatedDao(IntrospectedTable introspectedTable,Interface interfaze) throws Exception{
 //        File directory = shellCallback.getDirectory(gjf
 //                interfaze.getTargetProject(), gjf.getTargetPackage());
-        File targetFile = new File(getDirectory(MybatisConfig.TARGET_PROJECT, generatedJavaFileName(introspectedTable)));
+        File targetFile = new File(getDirectory(generatedJavaFileName(introspectedTable)));
         writeFile(targetFile, getContent(interfaze,introspectedTable),new String("UTF-8"));
     }
 
-    private String getDirectory(String targetProject, String generatedJavaFileName) {
-        StringBuilder sb = new StringBuilder(targetProject);
+    private String getDirectory(String generatedJavaFileName) {
+        StringBuilder sb = new StringBuilder();
         sb.append(generatedJavaFileName.replace(".","\\"));
         sb.append(".java");
         return sb.toString();
