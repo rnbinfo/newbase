@@ -19,6 +19,7 @@ public class MybatisConfig {
     public static String CUSTOM_JAVA_TYPE_RESOLVER = "com.rnb.newbase.persistence.generator.customize.plugin.type.CustomJavaTypeResolver";
     public static String TARGET_PROJECT = "D:\\generator\\src\\main\\java\\";
     public static String ENTITY_TARGET_PACKAGE = "com.rnb.traffic.entity.po";
+    public static String ENTITY_TARGET_PROJECT = "D:\\generator\\src\\main\\java\\";
     public static String XML_TARGET_PACKAGE = "com.rnb.traffic.xml";
     public static String MAPPER_TARGET_PACKAGE = "com.rnb.traffic.persistence.mapper";
 
@@ -67,13 +68,17 @@ public class MybatisConfig {
         //生成实体类的地址
         JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();
         javaModelGeneratorConfiguration.setTargetPackage(ENTITY_TARGET_PACKAGE);
-        javaModelGeneratorConfiguration.setTargetProject(TARGET_PROJECT);
+        javaModelGeneratorConfiguration.setTargetProject(ENTITY_TARGET_PROJECT);
         javaModelGeneratorConfiguration.addProperty("enableSubPackages","true");
         javaModelGeneratorConfiguration.addProperty("trimStrings","true");
         context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
         //生成的xml的地址
         SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
-        sqlMapGeneratorConfiguration.setTargetProject(TARGET_PROJECT);
+        String targetProject = TARGET_PROJECT;
+        if(TARGET_PROJECT.contains("java")){
+            targetProject = TARGET_PROJECT.substring(0,TARGET_PROJECT.length()-4);
+        }
+        sqlMapGeneratorConfiguration.setTargetProject(targetProject);
         sqlMapGeneratorConfiguration.setTargetPackage(XML_TARGET_PACKAGE);
         sqlMapGeneratorConfiguration.addProperty("enableSubPackages","true");
         context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);

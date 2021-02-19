@@ -1,6 +1,5 @@
 package com.rnb.newbase.persistence.generator.customize.plugin.generator;
 
-import com.rnb.newbase.persistence.generator.MybatisConfig;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
@@ -54,6 +53,7 @@ public class CustomJavaMapperMethodGenerator extends AbstractJavaMapperMethodGen
 
     private String getDirectory(String generatedJavaFileName) {
         StringBuilder sb = new StringBuilder();
+        sb.append(introspectedTable.getTableConfigurationProperty("TARGET_PROJECT"));
         sb.append(generatedJavaFileName.replace(".","\\"));
         sb.append(".java");
         return sb.toString();
