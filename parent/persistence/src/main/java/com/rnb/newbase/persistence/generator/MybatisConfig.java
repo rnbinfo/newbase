@@ -112,7 +112,9 @@ public class MybatisConfig {
             tableConfiguration.setUpdateByExampleStatementEnabled(false);
             tableConfiguration.setDeleteByExampleStatementEnabled(false);
             tableConfiguration.setSelectByExampleStatementEnabled(false);
+            tableConfiguration.addProperty("rootClass","com.rnb.newbase.entity.AbstractEntity");
             tableConfiguration.addProperty("useActualColumnNames","false");
+            tableConfiguration.addProperty("TARGET_PROJECT",TARGET_PROJECT+"\\");
             tableConfiguration.setGeneratedKey(new GeneratedKey("id","JDBC",true,"post"));
             context.addTableConfiguration(tableConfiguration);
         });
