@@ -74,10 +74,7 @@ public class MybatisConfig {
         context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
         //生成的xml的地址
         SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
-        String targetProject = TARGET_PROJECT;
-        if(TARGET_PROJECT.contains("java")){
-            targetProject = TARGET_PROJECT.substring(0,TARGET_PROJECT.length()-4);
-        }
+        String targetProject = TARGET_PROJECT.replace("java","");
         sqlMapGeneratorConfiguration.setTargetProject(targetProject);
         sqlMapGeneratorConfiguration.setTargetPackage(XML_TARGET_PACKAGE);
         sqlMapGeneratorConfiguration.addProperty("enableSubPackages","true");
