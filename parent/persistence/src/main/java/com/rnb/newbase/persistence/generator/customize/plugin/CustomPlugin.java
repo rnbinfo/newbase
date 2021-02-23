@@ -68,7 +68,7 @@ public class CustomPlugin extends PluginAdapter {
                                               TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
                                               IntrospectedTable introspectedTable,
                                               ModelClassType modelClassType) {
-        return false;
+        return true;
     }
     //entity去除set方法
     @Override
@@ -76,7 +76,7 @@ public class CustomPlugin extends PluginAdapter {
                                               TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
                                               IntrospectedTable introspectedTable,
                                               ModelClassType modelClassType) {
-        return false;
+        return true;
     }
     //取消原定的sql语句
     @Override
