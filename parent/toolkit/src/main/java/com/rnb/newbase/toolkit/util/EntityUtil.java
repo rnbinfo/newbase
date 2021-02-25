@@ -26,7 +26,7 @@ public class EntityUtil {
         return JSON.parseObject(JSONObject.toJSONString(map1), clazz);
     }
 
-    public static List convertEntityList(List<Object> list, Class clazz) {
+    public static List convertEntityList(List list, Class clazz) {
         List resList = new ArrayList();
         for(Object object : list){
             Map<String, Object> map1 = objectToMap(object);
