@@ -24,8 +24,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <maven.test.skip>true</maven.test.skip>
-        <spring.boot.version>2.3.8.RELEASE</spring.boot.version>
-        <spring.cloud.version>Hoxton.SR9</spring.cloud.version>
+        <spring.boot.version>2.3.9.RELEASE</spring.boot.version>
+        <spring.cloud.version>Hoxton.SR10</spring.cloud.version>
+        <spring.cloud.component.version>2.2.7.RELEASE</spring.cloud.component.version>
     </properties>
 
     <modules>

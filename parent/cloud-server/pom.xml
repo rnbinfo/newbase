@@ -21,7 +21,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-            <version>2.2.6.RELEASE</version>
+            <version>${spring.cloud.component.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
