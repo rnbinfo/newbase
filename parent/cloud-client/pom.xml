@@ -38,6 +38,17 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.12.1</version>
         </dependency>
+        <!-- newbase framework -->
+        <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>exception</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${parent.groupId}</groupId>
+            <artifactId>toolkit</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
