@@ -47,7 +47,7 @@ public abstract class BaseRemoteService {
         return new HttpFrontRequestHeader() {{
             this.setAppChannel("");
             this.setAppVersion("");
-            this.setDeviceBrand("");
+            this.setDeviceInfo("");
             this.setDeviceId("");
             this.setDeviceType("");
             this.setLoginToken("");

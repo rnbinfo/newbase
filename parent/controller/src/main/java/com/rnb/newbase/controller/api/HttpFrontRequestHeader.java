@@ -5,10 +5,10 @@ import java.util.Date;
 
 public class HttpFrontRequestHeader implements HttpRequestHeader {
     // 前端请求参数
-    private String deviceId; // 设备编号
     @NotBlank
-    private String deviceType; // 设备类型
-    private String deviceBrand; // 设备型号
+    private String deviceType; // 设备类型：APP，H5，WEB
+    private String deviceId; // 设备编号
+    private String deviceInfo; // 设备信息
     // 请求app信息
     private String appChannel; // 渠道
     private String appVersion; // app版本
@@ -38,12 +38,12 @@ public class HttpFrontRequestHeader implements HttpRequestHeader {
         this.deviceType = deviceType;
     }
 
-    public String getDeviceBrand() {
-        return deviceBrand;
+    public String getDeviceInfo() {
+        return deviceInfo;
     }
 
-    public void setDeviceBrand(String deviceBrand) {
-        this.deviceBrand = deviceBrand;
+    public void setDeviceInfo(String deviceInfo) {
+        this.deviceInfo = deviceInfo;
     }
 
     public String getAppChannel() {
@@ -115,7 +115,7 @@ public class HttpFrontRequestHeader implements HttpRequestHeader {
         return "HttpFrontRequestHeader{" +
                 "deviceId='" + deviceId + '\'' +
                 ", deviceType='" + deviceType + '\'' +
-                ", deviceBrand='" + deviceBrand + '\'' +
+                ", deviceInfo='" + deviceInfo + '\'' +
                 ", appChannel='" + appChannel + '\'' +
                 ", appVersion='" + appVersion + '\'' +
                 ", requestToken='" + requestToken + '\'' +
