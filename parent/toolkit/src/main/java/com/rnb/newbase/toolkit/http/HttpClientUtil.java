@@ -177,17 +177,35 @@ public class HttpClientUtil {
 
     /**
      * 向指定URL发送GET方法的请求
+     * 默认5秒超时
      *
      * @param url   发送请求的URL
      * @param agent 请求的agent头
      * @return URL 所代表远程资源的响应结果
      */
     public static String sendGet(String url, String agent) throws IOException {
+        String result = sendGet(url, agent, 5000);
+        return result;
+    }
+
+    /**
+     * 向指定URL发送GET方法的请求
+     *
+     * @param url   发送请求的URL
+     * @param agent 请求的agent头
+     * @param timeout 超时时间
+     * @return URL 所代表远程资源的响应结果
+     */
+    public static String sendGet(String url, String agent, int timeout) throws IOException {
         String result = null;
         CloseableHttpClient httpclient = HttpClients.createDefault();
         // 创建 HttpGet
         HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader("User-Agent", StringUtil.isBlank(agent) ? MAC_CHROME_USER_AGENT : agent);
+        // 添加超时
+        RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(timeout)
+                .setSocketTimeout(timeout).setConnectTimeout(timeout).build();
+        httpGet.setConfig(requestConfig);
         // 执行get请求
         logger.debug("Do get to url[{}] by CloseableHttpClient", url);
         CloseableHttpResponse response = httpclient.execute(httpGet);
